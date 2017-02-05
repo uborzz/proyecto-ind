@@ -1,4 +1,7 @@
-main*
-*.aux
-!main.tex
-!main.pdf
+*
+!*.tex
+!*.pdf
+!*DS_Store
+!*.cls
+!*.bib
+!Figures/*
