@@ -424,7 +424,7 @@ Esta placa hace de cerebro del sistema a pesar de ser alimentada a través de la
 \begin{figure}
 \centering
 \includegraphics[width=90mm]{Figures/arduinoMega}
-\caption{Mega}
+\caption{Freaduino Mega2560}
 \label{fig:arduinoMega}
 \end{figure}
 
@@ -449,13 +449,13 @@ Se emplea el diseño de la shield de la versión prototipo del armario. En este 
 \begin{minipage}{.5\textwidth}
   \centering
   \includegraphics[width=.9\textwidth]{Figures/pcbMega}
-  \captionof{figure}{Shield Mega soldada}
+  \captionof{figure}{PCB Shield}
   \label{fig:pcbdMega}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
   \centering
   \includegraphics[width=.9\textwidth]{Figures/shieldMega}
-  \captionof{figure}{PCB Shield Mega}
+  \captionof{figure}{Shield soldada}
   \label{fig:shieldMega}
 \end{minipage}
 \end{figure}
@@ -540,7 +540,7 @@ Este dispositivo se puede programar utilizando el lenguaje de Arduino,  que es u
 El programa principal ha sido creado en el entorno de Arduino, en un fichero (.ino). Se emplean las funciones de Arduino precocinadas y se extiende de librerías de Arduino, programadas en C++, para todo lo posible, a destacar:
 \begin{itemize}
   \item LiquidCrystal para escribir al display LCD.
-  \item Wire para la comunicación I2C.
+  \item Wire para la comunicación  I\textsuperscript{2}C.
   \item Ficheros de la librería MinIMU, que extiende a su vez de las librerías del giróscopo y el acelerómetro, L3G.h y LSM303.h, respectivamente.
 \end{itemize}
 
@@ -615,9 +615,9 @@ Esta calibración no forma parte del programa del sistema, sino de su configurac
 
 El programa definido para la controladora de Zowi es un intérprete de los comandos definidos. La Raspberry descargará dicho intérprete en el microcontrolador de Zowi para poder comunicarle las posiciones a las que ha de mover los servos, y los valores de calibración que tendrá que guardar en su memoria EEPROM, memoria que no es sobrescrita en el proceso de programación habitual de la placa controladora.
 
-Adicionalmente, la controladora de Zowi cuenta con un módulo de EEPROM por I2C, donde se recogen datos de fabricación de la placa. De esta forma se tienen 2 módulos de EEPROM, dejando el módulo del microcontrolador disponible para ser modificado por los usuarios de la placa.
+Adicionalmente, la controladora de Zowi cuenta con un módulo de EEPROM por  I\textsuperscript{2}C, donde se recogen datos de fabricación de la placa. De esta forma se tienen 2 módulos de EEPROM, dejando el módulo del microcontrolador disponible para ser modificado por los usuarios de la placa.
 
-Es en el módulo habitual donde se registran los valores de calibración del servo, pudiendo ser configurados por los usuarios en caso de que desmonten el juguete o reemplacen algún componente. Por otro lado, desde el módulo EEPROM por I2C, se obtendrá el número de serie, que almacenará la Raspberry en la base de datos con fines de trazabilidad.
+Es en el módulo habitual donde se registran los valores de calibración del servo, pudiendo ser configurados por los usuarios en caso de que desmonten el juguete o reemplacen algún componente. Por otro lado, desde el módulo EEPROM por  I\textsuperscript{2}C, se obtendrá el número de serie, que almacenará la Raspberry en la base de datos con fines de trazabilidad.
 
 Las librerías que se utilizan serán I2C\_eeprom.h y las estándar Servo.h para el movimiento de los servos y EEPROM.h para guardar los valores de calibración.
 
