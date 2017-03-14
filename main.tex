@@ -68,7 +68,15 @@ headsepline, % Uncomment to get a line under the header
 %	MARCIAL SETTINGS
 %----------------------------------------------------------------------------------------
 
+
+\usepackage{titlesec}
+
 \setlength{\parskip}{1em}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 %----------------------------------------------------------------------------------------
 %	THESIS INFORMATION
@@ -108,12 +116,13 @@ headsepline, % Uncomment to get a line under the header
 \begin{center}
 
 \vspace*{.06\textheight}
-{\scshape\LARGE \univname\par}\vspace{1.5cm} % University name
-\textsc{\Large Proyecto Fin de Carrera}\\[0.5cm] % Thesis type
+{\scshape\LARGE \univname\par}\vspace{0.1cm} % University name
+{\scshape\Large \facname\par}\vspace{0.8cm} % University name
+\textsc{\Large Proyecto Fin de Carrera}\\[0.2cm] % Thesis type
 
-\HRule \\[0.4cm] % Horizontal line
-{\huge \bfseries \ttitle\par}\vspace{0.4cm} % Thesis title
-\HRule \\[1.5cm] % Horizontal line
+\HRule \\[0.6cm] % Horizontal line
+{\huge \bfseries \ttitle\par}\vspace{0.2cm} % Thesis title
+\HRule \\[1.2cm] % Horizontal line
 
 \begin{minipage}[t]{0.4\textwidth}
 \begin{flushleft} \large
@@ -126,10 +135,9 @@ headsepline, % Uncomment to get a line under the header
 \emph{Coordinador:} \\
 \href{http://asd.asd}{\supname} % Supervisor name - remove the \href bracket to remove the link
 \end{flushright}
-\end{minipage}\\[3cm]
+\end{minipage}\\[0.1cm]
 
 \vfill
-
 \large \textit{Proyecto Fin de Carrera \\ para la titulación de \degreename}\\[0.3cm] % University requirement text
 \textit{realizado en}\\[0.4cm]
 % \groupname\\\deptname\\[2cm] % Research group name and department name
@@ -137,7 +145,7 @@ Grupo Robótica Industrial y Automatización\\Extinto Dpto. Innovación y Robót
 
 \vfill
 
-{\large \today}\\[4cm] % Date
+{\large \today}\\[1cm] % Date
 %\includegraphics{Logo} % University/department logo - uncomment to place it
 
 \vfill
@@ -265,10 +273,10 @@ Grupo Robótica Industrial y Automatización\\Extinto Dpto. Innovación y Robót
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
 
-%\include{Chapters/Chapter1}
-% \include{Chapters/Chapter2}
+\include{Chapters/Chapter1}
+%\include{Chapters/Chapter2}
 \include{Chapters/Chapter3}
-% \include{Chapters/Chapter4}
+%\include{Chapters/Chapter4}
 %\include{Chapters/Chapter5}
 
 %----------------------------------------------------------------------------------------
