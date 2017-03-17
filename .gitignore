@@ -3,7 +3,7 @@
 !*.pdf
 !*.cls
 !*.bib
-!Dev
 !Chapters
 main-blx.bib
 Chapters/Chapter5.tex
+!Dev/*
