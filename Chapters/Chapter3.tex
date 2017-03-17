@@ -173,42 +173,42 @@ Tras elegir la línea de los sensores IMU, se comienza a trabajar de inmediato e
 La máquina de estados es mejorada, diferenciando calibraciones malas de calibraciones buenas. Se añaden una indicador led y uno acústico para resaltar el resultado con diferentes sonidos. Esta mejora se mantendrá hasta la versión final del producto.
 
 La siguiente necesidad a cubrir sería garantizar que el robot comparte el plano con el sensor, que ha de ser calibrado antes de colocarse en el robot como explicamos en la sección anterior. Hasta ahora el sensor era fijado utilizando una grapa impresa (Ver Figura \ref{fig:grapa}).
-Se monta el sensor en una pieza especialmente diseñada e impresa para colocarla en el pié de Zowi, razón por la que es llamada "Zapato".
-Se crea también una base donde se coloca el Zowi, con un área para colocar el zapato en el momento de su inicialización, dónde el sensor es calibrado. Se puede ver el banco en la Figura \ref{fig:banco_1zapato}.
 
-
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=70mm]{Figures/grapa}
 \caption[Sensor anclado con grapa impresa]{Sensor anclado con grapa impresa}
 \label{fig:grapa}
 \end{figure}
 
+Se monta el sensor en una pieza especialmente diseñada e impresa para colocarla en el pié de Zowi, razón por la que es llamada "Zapato".
+Se crea también una base donde se coloca el Zowi, con un área para colocar el zapato en el momento de su inicialización, dónde el sensor es calibrado. Se puede ver el banco en la Figura \ref{fig:banco_1zapato}.
 
-\begin{figure}
+
+\begin{figure}[h]
 \centering
 \includegraphics[width=80mm]{Figures/banco_1zapato}
 \caption[Bancos impresos para Zowi y zapato]{Bancos impresos para Zowi y zapato}
 \label{fig:banco_1zapato}
 \end{figure}
 
-El algoritmo hasta ahora pasaba por calibrar una pierna del juguete solamente, haciendo ambas partes -tobillo y cadera-. Se mejora este punto, conectando a la placa controladora 2 sensores IMUs. La comunicación con la MinIMU-9 se realiza a través de I\textsuperscript{2}C, y su interfaz permite seleccionar facilmente entre 2 direcciones distintas para el giróscopo, y lo mismo para el acelerómetro/brújula. Para ello solamente tenemos que conectar SA0 a GND. (Ver Figura \ref{fig:minimu_sa0} y Tabla \ref{tab:IMU-I2C})
+El algoritmo hasta ahora pasaba por calibrar una pierna del juguete solamente, haciendo ambas partes -tobillo y cadera-. Se mejora este punto, conectando a la placa controladora 2 sensores IMUs. La comunicación con la MinIMU-9 se realiza a través de I\textsuperscript{2}C, y su interfaz permite seleccionar facilmente entre 2 direcciones distintas para el giróscopo, y lo mismo para el acelerómetro/brújula. Para ello solamente tenemos que conectar SA0 a GND. (Ver Figura \ref{fig:minimu_sa0} y Tabla \ref{tablei2c})
 
-% \begin{table}
-% \centering
-% \begin{tabular}{l c c}
-% \toprule
-% \tabhead{Sensor} & \tabhead{Slave Add. - default} & \tabhead{Slave Add. - SA0 driven low} \\
-% \midrule
-% L3GD20H (gyro) & 1101011b & 1101010b \\
-% LSM303D (acc+magnet) & 0011101b & 0011110b \\
-% \bottomrule\\
-% \end{tabular}
-% \caption{Direcciones de esclavo I\textsuperscript{2}C para MinIMU-9 v3}
-% \label{tab:IMU-I2C}
-% \end{table}
+\begin{table}[h]
+\centering
+\begin{tabular}{l c c}
+\toprule
+\textbf{Sensor} & \textbf{Slave Add. - default} & \textbf{Slave Add. - SA0 driven low} \\
+\midrule
+L3GD20H (gyro) & 1101011b & 1101010b \\
+LSM303D (acc+magnet) & 0011101b & 0011110b \\
+\bottomrule\\
+\end{tabular}
+\caption{Direcciones de esclavo I\textsuperscript{2}C para MinIMU-9 v3}
+\label{tablei2c}
+\end{table}
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=60mm]{Figures/minimu_sa0}
 \caption[MinIMU-9 v3 Pin-out]{MinIMU-9 v3 Pin-out}
@@ -217,7 +217,7 @@ El algoritmo hasta ahora pasaba por calibrar una pierna del juguete solamente, h
 
 Es necesario cambiar las direcciones de una de las placas, de lo contrario ambas tendrían las mismas direcciones de esclavo I\textsuperscript{2}C y causaría un mal funcionamiento el intentar leer de una de ellas. Además, se mejora el banco impreso para poder albergar los 2 zapatos y la máquina de estados, implementando la calibración de ambas piernas y aumentando número de iteraciones e incluyendo un filtrado de múltiples medidas para evitar leer ruido. Ver Figura \ref{fig:banco_2zapato}.
 
-\begin{figure}
+\begin{figure} [h]
 \centering
 \includegraphics[width=70mm]{Figures/banco_2zapato}
 \caption[Banco 1 zapato]{Banco impreso para Zowi y 2 zapatos}
@@ -265,7 +265,7 @@ Como característica \textbf{principal}, se diseña una interfaz de comunicació
 
 \begin{figure}
 \centering
-\includegraphics[width=120mm]{Figures/v3-diag}
+\includegraphics[width=130mm]{Figures/v3-diag}
 \caption[Arquitectura versión MEGA-ZUM por I\textsuperscript{2}C]{Arquitectura versión MEGA-ZUM por I\textsuperscript{2}C}
 \label{fig:v3-diag}
 \end{figure}
@@ -276,7 +276,7 @@ Al final de esta etapa se conoce la controladora que llevará el juguete, así c
 
 \begin{figure}
 \centering
-\includegraphics[width=70mm]{Figures/zowi-sls}
+\includegraphics[width=90mm]{Figures/zowi-sls}
 \caption[Prototipo final Zowi SLS]{Prototipo final Zowi SLS}
 \label{fig:zowi-sls}
 \end{figure}
@@ -419,11 +419,11 @@ En el carril DIM se instala una toma de Schuko, al que se conectará la Raspberr
 Se pueden ver las Figuras \ref{fig:interiorArmario} y \ref{fig:lateralArmario}, interior y lateral del armario, respectivamente. Para detalle de las conexiones al clemero, se pueden consultar los planos eléctricos en el Anexo \ref{app:planosElectricos}.
 
 \subsubsection{Mega}
-Esta placa hace de cerebro del sistema a pesar de ser alimentada a través de la Raspberry, y de comunicar a través de ella con Zowi.
+Esta placa hace de cerebro del sistema a pesar de ser alimentada a través de la Raspberry, y de comunicar a través de ella con Zowi. Se pueden consultar las especificaciones en el Anexo \ref{app:mega-specs}.
 
 \begin{figure}
 \centering
-\includegraphics[width=90mm]{Figures/arduinoMega}
+\includegraphics[width=105mm]{Figures/arduinoMega}
 \caption{Freaduino Mega2560}
 \label{fig:arduinoMega}
 \end{figure}
@@ -439,7 +439,7 @@ Podemos decir que Mega es la encargada de interactuar con el exterior y, dentro 
   \item Se ha alimentado por Vin en lugar de por USB para poder alimentar a todos sus dispositivos.
 \end{itemize}
 
-Información sobre software en la Subsección \ref{subsec:Software}. Para conocer con detalle las conexiones se pueden consultar los documentos del Anexo \ref{app:PlanosElectricos}.
+Información sobre software en la Subsección \ref{subsec:Software}. Para conocer con detalle las conexiones se pueden consultar los documentos del Anexo \ref{app:planosElectricos}.
 
 \subsubsection{Shield Mega}
 Se emplea el diseño de la shield de la versión prototipo del armario. En este caso se mandan a fabricar las PCBs, ya que nuestra fresadora no dió unos resultados tan profesionales.
@@ -462,11 +462,11 @@ Se emplea el diseño de la shield de la versión prototipo del armario. En este 
 
 Esta shield es colocada sobre los pines de la Mega y nos proporciona unos borneros para facilitar la conexión cableada a los dispositivos de entrada y salida, así como a la alimentación.
 
-Los esquemáticos y gerbers con el layout del diseño de la PCB se pueden consultar en el Anexo \ref{app:pcbFiles}. Para información más clara sobre conexiones, se pueden consultar los planos eléctricos, en el Anexo \ref{app:planosElectricos}.
+Los esquemáticos y gerbers con el layout del diseño de la PCB se pueden consultar en el Anexo \ref{app:pcbFiles}. Para información más clara sobre conexiones, se pueden consultar los planos eléctricos de un armario, Anexo \ref{app:planosElectricos}.
 
 \subsubsection{Raspberry PI 2}
 
-Este ordenador (Figura \ref{fig:raspi}) aporta muchísimas mejoras de fácil implementación al sistema, además de su función principal, hacer de enlace entre Mega y la controladora de Zowi. Éstas mejoras serán definidas en la Subsección \ref{subsec:Software}, apartado dedicado al software.
+Este ordenador (Figura \ref{fig:raspi}) aporta muchísimas mejoras de fácil implementación al sistema, además de su función principal, hacer de enlace entre Mega y la controladora de Zowi. Éstas mejoras serán definidas en la Subsección \ref{subsec:Software}, apartado dedicado al software. Se pueden consultar las especificaciones en el Anexo \ref{app:raspi-specs}.
 
 \begin{figure}
 \centering
@@ -515,7 +515,7 @@ Como se ha comentado anteriormente, Zowi también forma parte del sistema. Su co
 
 \subsubsection{Banco soporte Final de Zowi y zapatos}
 
-Para validaciones y durante todo el desarrollo del proyecto -así como para su uso en Madrid, tras acabar la fase de producción en fábrica- se han empleado, y emplean, los diseños realizados por el autor, cuyos planos podemos consultar en el Anexo \ref{app:planos}. No se especifican cotas de tolerancias por estar pensados para fabricar con impresoras 3D de filamento fundido, donde las dimensiones finales varían por parámetros como la temperatura o la velocidad de extrusión de la máquina.
+Para validaciones y durante todo el desarrollo del proyecto -así como para su uso en Madrid, tras acabar la fase de producción en fábrica- se han empleado, y emplean, los diseños realizados por el autor, cuyas vistas se pueden consultar en el Anexo \ref{app:piezas}. No se especifican cotas de tolerancias por estar pensados para fabricar con impresoras 3D de filamento fundido, donde las dimensiones finales varían por parámetros como la temperatura o la velocidad de extrusión de la máquina.
 
 \begin{figure}
 \centering
@@ -532,7 +532,7 @@ Sin embargo, el utillaje empleado en cadena de montaje (Figura \ref{fig:bancoFab
 
 \subsection{Software}
 \label{subsec:Software}
-En esta subsección se explicarán los aspectos relacionados con la programación del sistema y los algoritmos empleados. Se ha divido en tres partes, una para cada uno de los tres dispositivos principales, Mega, Raspberry y Zowi. Puede ser útil, para entender el funcionamiento del sistema, consultar los anexos XX,XX,XX, donde se muestra el Manual de Usuario y el Código desarrollado.
+En esta subsección se explicarán los aspectos relacionados con la programación del sistema y los algoritmos empleados. Se ha divido en tres partes, una para cada uno de los tres dispositivos principales, Mega, Raspberry y Zowi. Puede ser útil, para entender el funcionamiento del sistema, consultar los anexos \ref{app:usermanual}, \ref{app:pythoncode}, \ref{app:megacode} y \ref{app:zowicode}, donde se muestra el Manual de Usuario y el Código desarrollado.
 
 \subsubsection{Mega}
 Este dispositivo se puede programar utilizando el lenguaje de Arduino,  que es una adaptación de C++ que proveniene de avr-libc y provee de una librería de C de alta calidad para usar con GCC en los microcontroladores AVR de Atmel y muchas funciones específicas para los MCU AVR de Atmel. Su simplicidad y la implicación por parte de la comunidad hacen realmente fácil y rápido su uso y aprendizaje.
@@ -546,7 +546,7 @@ El programa principal ha sido creado en el entorno de Arduino, en un fichero (.i
 
 El programa de Mega sigue una estructura de máquina de estados que se encarga de llevar al operador por los diferentes pasos del proceso de calibración, es aquí dónde se toman las lecturas de las posiciones de los servos y se decide cuánto se han de mover, dónde se valida el resultado de la calibración y dónde se produce la interacción entre la máquina y el usuario. Se puede decir que es el principal dispositivo del sistema.
 
-Para conocer la lógica de la máquina de estados, se pueden consultar los diagramas del anexo XX, para conocer el proceso de uso, como operador, se puede consultar el manual de usuario del anexo XX.
+Para conocer la lógica de la máquina de estados, se pueden consultar los diagramas del Anexo \ref{app:megadiag}, para conocer el proceso de uso, como operador, se puede consultar el manual de usuario del Anexo \ref{app:usermanual}.
 
 \paragraph{Protocolo de comunicación}
 
@@ -685,7 +685,7 @@ Es la única instrucción que proviene de Zowi, e indica el número de serie de 
 
 \paragraph{Base de datos}
 
-Se instala en el sistema una base de datos MariaDB (MySQL) local, contra la que se registran los eventos que suceden durante el uso del sistema. Además, la script del programa principal de python está también preparada para escribir a una base de datos remota.
+Se instala en el sistema una base de datos MySQL local, contra la que se registran los eventos que suceden durante el uso del sistema. Además, la script del programa principal de python está también preparada para escribir a una base de datos remota.
 Se escribe en la base de datos tras cada calibración, sea buena o mala. Para lo que se utiliza un campo de "Estado" que valdrá 1 o 0, respectivamente.
 Se registran los errores de calibración leídos en Arduino Mega para cada uno de los 4 servos.
 Se registran además las 4 posiciones "trim" de los servos, las mismas que se hacen llegar a la placa de Zowi para que guarde en su EEPROM para salir a venta.
@@ -702,19 +702,21 @@ Durante el uso de los primeros días en producción surgieron algunos problemas,
   \item \textbf{Valores a 5:} Error conexión fallida al intentar descargar programa final a Zowi.
 \end{itemize}
 
-Para ver la estructura de la tabla, se puede consultar el Anexo \ref{app:DataBaseStructure}.
+Para ver la estructura de la tabla, se puede consultar el Anexo \ref{app:dbsctruct}.
 
 \paragraph{Configuración adicional}
 El servicio de escritorio remoto XRDP es instalado, lo que nos permite utilizar la interfaz gráfica de forma remota.
 
-El entorno de Arduino es también instalado, permitiendo modificar el programa de Mega desde Raspberry.
+El entorno de Arduino es también instalado, permitiendo modificar el programa de Mega desde Raspberry. Se instalan también las librerías empleadas en los programas creados. El entorno de Arduino instalará AVRdude para realizar la programación de los microcontroladores.
 
-En el fichero de configuración de Raspberry \textbf{/boot/config.txt} se configura \textit{max\_usb\_current=1} lo que nos permite suministrar hasta to 1.2A por USB para alimentar a Zowi (por defecto, límitado a 600mA).
+En el fichero de configuración de Raspberry \textbf{/boot/config.txt} se configura \textit{max-usb-current=1} lo que nos permite suministrar hasta to 1.2A por USB para alimentar a Zowi (por defecto, límitado a 600mA).
 
-Se configura el Login automático mediante el fichero \textbf{/etc/inittab}. De este modo el sistema funciona como servidor en lugar de esperar que un usuario introduzca sus credenciales. Ref/Anexo.
+Se configura el Login automático mediante el fichero \textbf{/etc/inittab}. De este modo el sistema funciona como servidor en lugar de esperar que un usuario introduzca sus credenciales. Procedimiento en el Anexo \ref{app:autologin}.
 
-Se crea una una script, \textbf{running.sh} que funciona como monitor, hará que la script principal sea arrancada siempre que no esté corriendo. Esta medida rearma el sistema ante algunos errores, como por ejemplo, intentar programar una placa que deja de estar energizada o es pagada o desconectada durante la programación. Anexo xx.
+Se crea una una script, \textbf{running.sh} que funciona como monitor, hará que la script principal sea arrancada siempre que no esté corriendo. Esta medida rearma el sistema ante algunos errores, como por ejemplo, intentar programar una placa que deja de estar energizada o es apagada o desconectada durante la programación. Anexo \ref{app:running}.
 
-Se configura el arranque automático de la script anterior al encender el sistema, dicha script levantará el programa principal nada más ser iniciado el sistema. Configuración en el ficher \textbf{ZowiInit} que se puede consultar en el Anexo xx.
+Se configura el arranque automático de la script anterior al encender el sistema, dicha script levantará el programa principal nada más ser iniciado el sistema. El arranque automático se logra mediante el fichero \textbf{ZowiInit}, que se puede consultar en el Anexo \ref{app:zowiinit}.
 
-Tras observar el funcionamiento del sistema en producción durante algunos días, se detectan algunos errores al conectar y desconectar repetidas veces los robots. El sistema podría no funcionar si se asigna un puerto diferente a Mega, o si se inicia el sistema con un Zowi ya conectado. Para mejorar ésto, se crean unas reglas (fichero \textbf{50-usbportsbq.rules}) para definir el puerto según el ID del fabricante de la placa, asignando a cualquier puerto USB conectado a Raspberry el alias de “mega” o “zowi” en lugar de ttyUSBX, nombre por defecto) . Dichas reglas son instaladas dentro de \textbf{/etc/udev/rules.d/}. El programa de python es modificado para asumir estos cambios. El fichero de las reglas se puede ver en el Anexo XX. Además, se implementa una nueva función en el código que desconecta y conecta eléctricamente la bahía del puerto USB de Zowi por software (utilizando \textbf{bind} y \textbf{unbind}) antes de cada programación. Los errores y reinicios se reducen inmediatamente.
+Durante el desarrollo se creó un documento de notas para facilitar la reproducción de la instalación desde cero, además de la creación de unas imágenes completas de la tarjeta SD de la Raspberry, utilizando Win32DiskImager. Se anexan las mencionadas notas por si pudiesen resultar de interés para el lector, Anexo \ref{app:raspi-tips}.
+
+Tras observar el funcionamiento del sistema en producción durante algunos días, se detectan algunos errores al conectar y desconectar repetidas veces los robots. El sistema podría no funcionar si se asigna un puerto diferente a Mega, o si se inicia el sistema con un Zowi ya conectado. Para mejorar ésto, se crean unas reglas (fichero \textbf{50-usbportsbq.rules}) para definir el puerto según el ID del fabricante de la placa, asignando a cualquier puerto USB conectado a Raspberry el alias de “mega” o “zowi” en lugar de ttyUSBX, nombre por defecto) . Dichas reglas son instaladas dentro de \textbf{/etc/udev/rules.d/}. El programa de python es modificado para asumir estos cambios. Las notas sobre el fichero de las reglas se puede ver en el Anexo \ref{app:rules}. Además, se implementa una nueva función en el código que desconecta y conecta eléctricamente la bahía del puerto USB de Zowi por software (utilizando \textbf{bind} y \textbf{unbind}) antes de cada programación. Los errores y reinicios se reducen inmediatamente.
