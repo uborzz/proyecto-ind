@@ -1,8 +1,9 @@
 *
 !*.tex
 !*.pdf
-!*DS_Store
 !*.cls
 !*.bib
 !Dev
+!Chapters
 main-blx.bib
+Chapters/Chapter5.tex
