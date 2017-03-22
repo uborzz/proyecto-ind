@@ -321,6 +321,7 @@ KOMA-script documentation for details.}]{fancyhdr}
 
 \newcommand{\abbrevname}{List of Abbreviations}
 \providecaptionname{english,british,american}{\abbrevname}{List of Abbreviations}
+\providecaptionname{spanish}{\abbrevname}{Lista de Abreviaciones}
 \providecaptionname{ngerman,german,austrian,naustrian}{\abbrevname}{Abk\"urzungsverzeichnis}
 \NewDocumentEnvironment{abbreviations}{ m }{%
 	\ifbool{nolistspace}{\begingroup\singlespacing}{}
@@ -341,6 +342,7 @@ KOMA-script documentation for details.}]{fancyhdr}
 \newcommand{\byname}{by}
 \newcommand{\abstractname}{Resumen}
 \providecaptionname{german,ngerman,austrian,naustrian}{\byname}{von}
+\providecaptionname{spanish}{\byname}{por}
 \providecaptionname{american,australian,british,canadian,english,newzealand,UKenglish,USenglish}{\byname}{by}
 \ifbool{consistentlayout}{
 	\DeclareDocumentEnvironment{abstract}{ O{} }{%
@@ -411,6 +413,7 @@ KOMA-script documentation for details.}]{fancyhdr}
 \colorlet{mdtRed}{red!50!black}
 \newcommand{\acknowledgementname}{Acknowledgements}
 \providecaptionname{american,australian,british,canadian,english,newzealand,UKenglish,USenglish} {\acknowledgementname}{Acknowledgements} % Acknowledgement text for English countries
+\providecaptionname{spanish}{\acknowledgementname}{Agradecimientos}
 \providecaptionname{german,ngerman,austrian,naustrian}{\acknowledgementname}{Danksagung} % Acknowledgement text for Germanic countries
 
 \ifbool{consistentlayout}{
@@ -437,6 +440,7 @@ KOMA-script documentation for details.}]{fancyhdr}
 
 \newcommand{\authorshipname}{Declaration of Authorship}
 \providecaptionname{american,australian,british,canadian,english,newzealand,UKenglish,USenglish}{\authorshipname}{Declaration of Authorship} % Declaration of Authorship text for English countries
+
 \providecaptionname{german,ngerman,austrian,naustrian}{\authorshipname}{Eidesstattliche Erkl\"arung} % Declaration of Authorship text for Germanic countries
 
 \ifbool{consistentlayout}{
@@ -501,6 +505,7 @@ KOMA-script documentation for details.}]{fancyhdr}
 
 \newcommand{\symbolsname}{List of Symbols}
 \providecaptionname{english,british,american}{\symbolsname}{List of Symbols}
+\providecaptionname{spanish}{\symbolsname}{Lista de Símbolos}
 \providecaptionname{ngerman,german,austrian,naustrian}{\symbolsname}{Symbolverzeichnis}
 
 \NewDocumentEnvironment{symbols}{ m }{%

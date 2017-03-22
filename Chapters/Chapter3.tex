@@ -51,7 +51,7 @@ En la figura \ref{fig:CeldaFanuc} podemos ver el área de trabajo de la celda ro
 
 El programa creado en Arduino recibe como entradas dos señales que indican en qué sentido se debe girar el servo. Como salida, actúan sobre el servo hacíendolo corregir su posición iterativamente 1 grado cada segundo hasta alcanzar la posición deseada.
 
-La posición deseada es definida utilizando iRvision (Software de visión de Fanuc), mediante técnicas de visión por computador (Localización de elementos entrenados, medición de distancias y ángulos entre ellos). Para el caso del "tobillo", buscando perpendicularidad con la "cadera", y para ésta, consiguiendo cierta distancia entre dos líneas paralelas. Se pueden ver las Figuras \ref{fig:Tobillo} y \ref{fig:Cadera}.
+La posición deseada es definida utilizando iRvision (Software de visión de Fanuc), mediante técnicas de visión por computador (Localización de elementos entrenados, medición de distancias y ángulos entre ellos). Para el caso del ``tobillo'', buscando perpendicularidad con la ``cadera'', y para ésta, consiguiendo cierta distancia entre dos líneas paralelas. Se pueden ver las Figuras \ref{fig:Tobillo} y \ref{fig:Cadera}.
 
 \begin{figure}
 \centering
@@ -91,8 +91,8 @@ La MinIMU-9 v3 (Figura \ref{fig:MinIMU_board} fue seleccionada de entre varias o
 Tras estudiar el comportamiento del sensor, y una fase de documentación acerca de las opciones de que se dispone, surgen tres posibilidades:
 
 \begin{itemize}
-  \item Librería de Pololu "MinIMU-9 AHRS"
-  \item Librería "Open IMU"
+  \item Librería de Pololu ``MinIMU-9 AHRS''
+  \item Librería ``Open IMU''
   \item Desarrollar la matemática tomando los valores RAW del sensor
 \end{itemize}
 
@@ -102,7 +102,7 @@ Por simplicidad, Open IMU resultaba llamativa, pero rápidamente se percibió qu
 
 La línea elegida fue la de la librería recomendada por Pololu (fabricante del dispositivo), dejando un poco limitado el modo de funcionar pero ofreciendo un acceso rápido a las mediciones del sensor en forma de posición en ángulos euler.
 
-Para un correcto funcionamiento del magnetómetro, se han de configurar los valores máximos y mínimos de las lecturas del acelerómetro, estos 2 sensores se encuentran en el encapsulado LSM303, la librería de dicho chip proporciona un programa de Arduino que captura dichas mediciones y salva la mayor mientras movemos la placa en todas las orientaciones posibles, mostrandola por el puerto serie. Los valores obtenidos se han de escribir, sustituyendo los "por defecto", en la cabecera de la misma librería.
+Para un correcto funcionamiento del magnetómetro, se han de configurar los valores máximos y mínimos de las lecturas del acelerómetro, estos 2 sensores se encuentran en el encapsulado LSM303, la librería de dicho chip proporciona un programa de Arduino que captura dichas mediciones y salva la mayor mientras movemos la placa en todas las orientaciones posibles, mostrandola por el puerto serie. Los valores obtenidos se han de escribir, sustituyendo los ``por defecto'', en la cabecera de la misma librería.
 
 La limitación de ésta librería que se había comentado antes , es que para obtener con precisión los ángulos euler en todas las orientaciones, se debe llamar una función de la librería \textbf{calibrateIMU()} con la placa colocada en una de las 2 posiciones que se ven en la Figura \ref{fig:IMU_positions}, lo más paralelo al suelo posible, con ésta función definimos en el espacio el 0 de los ejes X e Y del sistema, por lo que se corrigen desvíos si la posición no es totalmente horizontal, sin embargo, ésto deriva en errores que crecen en proporción a la inclinación que se de en alguno de los ejes. Se elige una de ellas configurando ciertos parámetros de la librería de Pololu en el programa principal.
 
@@ -181,7 +181,7 @@ La siguiente necesidad a cubrir sería garantizar que el robot comparte el plano
 \label{fig:grapa}
 \end{figure}
 
-Se monta el sensor en una pieza especialmente diseñada e impresa para colocarla en el pié de Zowi, razón por la que es llamada "Zapato".
+Se monta el sensor en una pieza especialmente diseñada e impresa para colocarla en el pié de Zowi, razón por la que es llamada ``Zapato''.
 Se crea también una base donde se coloca el Zowi, con un área para colocar el zapato en el momento de su inicialización, dónde el sensor es calibrado. Se puede ver el banco en la Figura \ref{fig:banco_1zapato}.
 
 
@@ -192,7 +192,7 @@ Se crea también una base donde se coloca el Zowi, con un área para colocar el 
 \label{fig:banco_1zapato}
 \end{figure}
 
-El algoritmo hasta ahora pasaba por calibrar una pierna del juguete solamente, haciendo ambas partes -tobillo y cadera-. Se mejora este punto, conectando a la placa controladora 2 sensores IMUs. La comunicación con la MinIMU-9 se realiza a través de I\textsuperscript{2}C, y su interfaz permite seleccionar facilmente entre 2 direcciones distintas para el giróscopo, y lo mismo para el acelerómetro/brújula. Para ello solamente tenemos que conectar SA0 a GND. (Ver Figura \ref{fig:minimu_sa0} y Tabla \ref{tablei2c})
+El algoritmo hasta ahora pasaba por calibrar una pierna del juguete solamente, haciendo ambas partes -tobillo y cadera-. Se mejora este punto, conectando a la placa controladora 2 sensores IMUs. La comunicación con la MinIMU-9 se realiza a través de I\textsuperscript{2}C, y su interfaz permite seleccionar facilmente entre 2 direcciones distintas para el giróscopo, y lo mismo para el acelerómetro/brújula. Para ello solamente tenemos que conectar SA0 a GND. (Ver Figura \ref{fig:minimu_sa0} y Cuadro \ref{tablei2c})
 
 \begin{table}[h]
 \centering
@@ -261,7 +261,7 @@ Se vuelven a diseñar unos bancos para calibrar los sensores tanto horizontal co
 
 El empleo de una Mega nos proporciona una gran cantidad de pines de entrada salida, se incorporan al sistema unos finales de carrera para detectar que los zapatos están en la posición correcta para su calibración.
 
-Como característica \textbf{principal}, se diseña una interfaz de comunicación entre ambas placas mediante I\textsuperscript{2}C, se construyen determinadas "instrucciones" en la placa Mega (placa con la máquina de estados) y un programa que funciona como intérprete que es cargado en la ZUM (placa del robot), se encarga de traducir las instrucciones recibidas de la otra placa por I\textsuperscript{2}C en movimientos de servos, entre otras cosas. Puede verse la arquitectura del sistema en la Figura \ref{fig:v3-diag}.
+Como característica \textbf{principal}, se diseña una interfaz de comunicación entre ambas placas mediante I\textsuperscript{2}C, se construyen determinadas ``instrucciones'' en la placa Mega (placa con la máquina de estados) y un programa que funciona como intérprete que es cargado en la ZUM (placa del robot), se encarga de traducir las instrucciones recibidas de la otra placa por I\textsuperscript{2}C en movimientos de servos, entre otras cosas. Puede verse la arquitectura del sistema en la Figura \ref{fig:v3-diag}.
 
 \begin{figure}
 \centering
@@ -295,7 +295,7 @@ Una primera iteración fue la de sustituir la comunicación por I\textsuperscrip
   \item Se implementó en la Raspberry un programa en Python que hacía de intérprete. Haciendo escucha a la comunicación serie abierta con la Freeduino Mega, y enviando comandos a la placa controladora de Zowi a través de la comunicación Serie abierta con ella.
 \end{itemize}
 
-La incorporación al sistema de una Raspberry PI, un ordenador al fin y al cabo, abría gran cantidad de mejoras de fácil implementación, por lo que se aprovechó la ocasión para desarrollar un prototipo "casi definitivo", no solamente a nivel de software.
+La incorporación al sistema de una Raspberry PI, un ordenador al fin y al cabo, abría gran cantidad de mejoras de fácil implementación, por lo que se aprovechó la ocasión para desarrollar un prototipo ``casi definitivo'', no solamente a nivel de software.
 
 Se decide introducir la electrónica en un armario eléctrico y, a su vez, emplear el mismo como estructura del soporte de Zowi y de los zapatos. Ver Figura \ref{fig:bancov4}. Se integran nivel y patas regulables.
 
@@ -577,7 +577,7 @@ Instrucciones desde Mega:
 
 Si bien las instrucciones anteriores fueron útiles durante el desarrollo, se acabó utilizando, principalmente, el movimiento de un solo servo por ser más controlado, se observaron algunos funcionamientos no deseados al tener en movimiento los 4 servos simultáneamente, además de la batería en carga.
 
-Como entrada, Mega recibirá 'M' o 'B' desde Raspberry en los estados que requieren feedback para determinar el siguiente paso en la máquina de estados, indicando estos 'Mal' y 'Bien', respectivamente. Las funciones de lectura como ROFC tambien resultaron útiles durante el desarrollo, sin embargo no se utilizan en la versión final.
+Como entrada, Mega recibirá ``M'' o ``B'' desde Raspberry en los estados que requieren feedback para determinar el siguiente paso en la máquina de estados, indicando estos ``Mal'' y ``Bien'', respectivamente. Las funciones de lectura como ROFC tambien resultaron útiles durante el desarrollo, sin embargo no se utilizan en la versión final.
 
 \paragraph{Configuración}
 
@@ -632,7 +632,7 @@ Las siguientes instrucciones son recibidas por Zowi en la última versión del i
   \item \textbf{MHOC:} Zowi lee el valor del offset de las articulaciones en su EEPROM y mueve todos los servos a la posición 90º con la corrección.
 \end{itemize}
 
-Se implementa una instrucción de salida, utilizando el mismo protocolo que se ha visto en Mega (instrucción delimitada por "\$" y "\#"), Zowi lee el número de serie de su controladora (6 dígitos) y se lo envía a la Raspberry con la instrucción \textbf{OKNS:}.
+Se implementa una instrucción de salida, utilizando el mismo protocolo que se ha visto en Mega (instrucción delimitada por ``\$'' y ``\#''), Zowi lee el número de serie de su controladora (6 dígitos) y se lo envía a la Raspberry con la instrucción \textbf{OKNS:}.
 
 \subsubsection{Raspberry}
 
@@ -686,9 +686,9 @@ Es la única instrucción que proviene de Zowi, e indica el número de serie de 
 \paragraph{Base de datos}
 
 Se instala en el sistema una base de datos MySQL local, contra la que se registran los eventos que suceden durante el uso del sistema. Además, la script del programa principal de python está también preparada para escribir a una base de datos remota.
-Se escribe en la base de datos tras cada calibración, sea buena o mala. Para lo que se utiliza un campo de "Estado" que valdrá 1 o 0, respectivamente.
+Se escribe en la base de datos tras cada calibración, sea buena o mala. Para lo que se utiliza un campo de ``Estado'' que valdrá 1 o 0, respectivamente.
 Se registran los errores de calibración leídos en Arduino Mega para cada uno de los 4 servos.
-Se registran además las 4 posiciones "trim" de los servos, las mismas que se hacen llegar a la placa de Zowi para que guarde en su EEPROM para salir a venta.
+Se registran además las 4 posiciones ``trim'' de los servos, las mismas que se hacen llegar a la placa de Zowi para que guarde en su EEPROM para salir a venta.
 Se registra la hora, con fines estadísticos de tiempos y tambien el número de serie del Zowi conectado con fin de trazabilidad en caso de errores/reclamaciones.
 
 Cuando se inicia o apaga el sistema, se escriben todos los campos a 1 salvo la hora para el caso de inicio. Y todos los valores a 0 salvo la hora para el fin.
