@@ -1,0 +1,27 @@
+AVERIGUAR LA IP DE LA RASPBERRY 
+
+desde un ordenador de la red ejecutar
+arp -a
+y buscar la entrada con la sguiente MAC
+B8:27:EB:36:FE:EC
+
+Y esa es la IP de la raspberry pi
+
+Con esto podremos acceder mediante los siguientes servicios:
+	* SSH
+	* SFTP
+
+COPIAR FICHEROS A LA RASPBERRY
+
+Mediante el cliente Filezilla nos conectaremos al siguiente servidor:
+
+Servidor: IP ANTES COPIADA
+Protocolo: SFTP - SSH File Transfer Protocol
+Usuario: pi
+Contraseña: raspberry
+
+Los ficheros con los .hex están en la ruta:
+/home/pi/zowi/python
+
+Final_Test.cpp.hex
+zowi_offset_i2c.cpp.hex

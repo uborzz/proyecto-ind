@@ -1,0 +1,42 @@
+Poner IP fija a la raspberry
+	$ cd /etc/network
+Hacems copia  del fichero interfaces
+	$ sudo cp interfaces interfaces.bak
+Editamos el fichero interfaces
+la linea 
+	iface eth0 inet manual
+la cambiamos por 
+	iface eth0 inet static
+	address 172.16.16.27
+	netmask 255.255.255.0
+	gateway 172.16.16.1
+
+Reiniciamos el sistema.
+
+Instalar base de datos MariaDB raspberry
+
+editamos el fichero /etc/apt/sources.list y añadimos
+
+deb http://mirrordirector.raspbian.org/raspbian/ jessie main contrib non-free rpi
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install mariadb-server
+
+Permitir acceso remoto a la BBDD: ( https://mariadb.com/kb/en/mariadb/configuring-mariadb-for-remote-client-access/ )
+
+en consola:
+	$ mysql -u root -p
+
+	GRANT ALL ON *.* to root@'%' IDENTIFIED BY 'toor';
+	FLUSH PRIVILEGES;
+	exit;
+
+editar fichero /etc/mysql/my.cnf
+comentar con # línea (~47)
+
+	# bind-address	= 127.0.0.1
+
+guardar fichero y reiniciar servidor:
+
+	$ sudo /etc/init.d/mysql restart
