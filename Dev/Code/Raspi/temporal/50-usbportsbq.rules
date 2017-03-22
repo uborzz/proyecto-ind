@@ -1,2 +1,0 @@
-KERNEL =="ttyUSB[0-9]*", SUBSYSTEMS=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK="mega", MODE="0660", GROUP="dialout"
-KERNEL =="ttyUSB[0-9]*", SUBSYSTEMS=="usb", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK="zowi", MODE="0660", GROUP="dialout"
