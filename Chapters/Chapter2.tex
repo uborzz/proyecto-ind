@@ -32,7 +32,7 @@ Se ha creado una aplicación móvil, Zowi App, que permite controlar los movimie
 La tarea asignada al autor del proyecto fue la de idear y desarrollar el prototipo de \textbf{un sistema capaz de ajustar de forma automática cada uno de los cuatro servos que componen las piernas de Zowi}, lo que permite al robot ejecutar sus programas de fábrica, con los que saldrá a la venta, de forma correcta; entre ellos: realizar diferentes bailes, caminar, etc. Dicho sistema debe ser utilizado por operaradores sin conocimientos de Arduino ni de electrónica en general. La nacionalidad de los operarios tambien es desconocida por no saberse el emplazamiento de la fábrica hasta más avanzado el proyecto (razón por la que parte de la documentación anexada se encuentra en inglés: menú de la interfaz, comentarios del código, etc).
 
 \subsection{Servos}
-Los servos son un tipo especial de motor DC que se caracterizan por su capacidad para posicionarse de forma inmediata en cualquier posición dentro de su intervalo de operación. Para ello, el servomotor espera un tren de pulsos que se corresponde con el movimiento a realizar. Están generalmente formados por el motor, un sistema reductor formado por ruedas dentadas, un potenciómetro y un circuito de realimentación, todo en un misma caja de pequeñas dimensiones. En la Figura \ref{fig:futaba}, se muestra un servomotor del tipo empleado en Zowi.
+Los servos son un tipo especial de motor DC que se caracterizan por su capacidad para posicionarse de forma inmediata en cualquier posición dentro de su intervalo de operación. Para ello, el servomotor espera un tren de pulsos que se corresponde con el movimiento a realizar. Están generalmente formados por el motor, un sistema reductor formado por ruedas dentadas, un potenciómetro y un circuito de realimentación, todo en una misma caja de pequeñas dimensiones. En la Figura \ref{fig:futaba}, se muestra un servomotor del tipo empleado en Zowi.
 
 \begin{figure}[h]
 \centering
@@ -51,7 +51,7 @@ El circuito electrónico de realimentación del servo es el encargado de recibir
 \end{figure}
 
 
-La modulación por anchura de pulso, PWM (Pulse Width Modulation), es una de los sistemas más empleados para el control de servos. Este sistema consiste en generar una onda cuadrada en la que se varía el tiempo que el pulso está a nivel alto, manteniendo el mismo período, con el objetivo de modificar la posición del servo según se desee. Arduino permite generar PWM en algunos de sus pines de forma sencilla, además, para hacerlo aún más fácil, tiene la librería \textit{srvo.h}, que nos permite dar un valor de posición angular (grados) a un determinado pin, y él sólo genera el PWM.
+La modulación por anchura de pulso, PWM (Pulse Width Modulation), es uno de los sistemas más empleados para el control de servos. Este sistema consiste en generar una onda cuadrada en la que se varía el tiempo que el pulso está a nivel alto, manteniendo el mismo período, con el objetivo de modificar la posición del servo según se desee. Arduino permite generar PWM en algunos de sus pines de forma sencilla, además, para hacerlo aún más fácil, tiene la librería \textit{srvo.h}, que nos permite dar un valor de posición angular (grados) a un determinado pin, y él sólo genera el PWM.
 
 Las señales de PWM requeridas por el circuito de control electrónico son similares para la mayoría de los modelos de servo. Esta señal tiene la forma de una onda cuadrada. Dependiendo del ancho del pulso, el motor adoptará una posición fija. Un ejemplo visual en la Figura \ref{fig:ServoPWM}.
 
@@ -138,7 +138,7 @@ Además de los componentes electrónicos que se han introducido anteriormente y 
 
 \subsection{Máquinas}
 
-La tecnología de impresión 3D por FFF ha aportado agilidad al proyecto al permitir la creación de piezas en el mismo lugar en cuestión de horas. Se han empleado máquinas \textbf{Hephestos} (Figura \ref{fig:hephestos}) y \textbf{Witbox} (Figura \ref{fig:witbox}) de BQ, ambas con firmware \textbf{Marlin}, para la creación del utillaje provisional y componentes menores como los soporte de las placas dentro del armario o la caja que contiene el display LCD y el zumbador.
+La tecnología de impresión 3D por FFF ha aportado agilidad al proyecto al permitir la creación de piezas en el mismo lugar en cuestión de horas. Se han empleado máquinas \textbf{Hephestos} (Figura \ref{fig:hephestos}) y \textbf{Witbox} (Figura \ref{fig:witbox}) de BQ, ambas con firmware \textbf{Marlin}, para la creación del utillaje provisional y componentes menores como los soportes de las placas dentro del armario o la caja que contiene el display LCD y el zumbador.
 
 \begin{figure}[h]
 \centering
