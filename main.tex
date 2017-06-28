@@ -94,8 +94,8 @@ headsepline, % Uncomment to get a line under the header
 \subject{Investigación y Robótica} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
 \keywords{} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
 \university{\href{http://www.uhu.es}{Universidad de Huelva}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
-\department{\href{to be filled}{to be filled}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
-\group{\href{to be filled}{to be filled}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
+\department{\href{}{}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
+\group{\href{}{}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
 \faculty{\href{http://www.uhu.es/etsi}{Escuela Técnica Superior de Ingeniería}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
 
 \AtBeginDocument{
@@ -178,35 +178,54 @@ Grupo Robótica Industrial y Automatización\\Extinto Dpto. Innovación y Robót
 % \rule[0.5em]{25em}{0.5pt} % This prints a line to write the date
 % \end{declaration}
 %
-% \cleardoublepage
-
+%\cleardoublepage
+%
 % %----------------------------------------------------------------------------------------
 % %	QUOTATION PAGE
 % %----------------------------------------------------------------------------------------
-%
-% \vspace*{0.2\textheight}
-%
-% \noindent\enquote{\itshape Everyday we make it, we'll make it the best we can.}\bigbreak
-%
-% \hfill Jack Daniel
 
-% %----------------------------------------------------------------------------------------
-% %	ABSTRACT PAGE
-% %----------------------------------------------------------------------------------------
-%
-% \begin{abstract}
-% \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-% Blablabla
-% \end{abstract}
+\vspace*{0.2\textheight}
 
-% %----------------------------------------------------------------------------------------
-% %	ACKNOWLEDGEMENTS
-% %----------------------------------------------------------------------------------------
-%
-% \begin{acknowledgements}
-% \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
-% The acknowledgments and the people to thank go here, don't forget to include your project advisor\ldots
-% \end{acknowledgements}
+\noindent\enquote{\itshape Everyday we make it, we'll make it the best we can.}\bigbreak
+
+\hfill Jack Daniel
+
+ %----------------------------------------------------------------------------------------
+ %	ABSTRACT PAGE
+ %----------------------------------------------------------------------------------------
+
+ \begin{abstract}
+ \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
+ 
+El lanzamiento de un nuevo producto en la línea de robótica educativa de BQ necesitó la implicación de gran parte de los departamentos de la empresa. En este momento el autor de este proyecto y miembro del Departamento de Innovación y Robótica, trabajaba en sistemas de automatización y visión por computador.
+
+Este documento recoge la información sobre el diseño de un sistema, basado en Arduino, Raspberry y sensores IMU, que da solución al problema del calibrado automático en línea de producción de los servomotores del nuevo producto antes mencionado, el robot educativo Zowi. 
+
+
+ \end{abstract}
+ %----------------------------------------------------------------------------------------
+ %	ACKNOWLEDGEMENTS
+ %----------------------------------------------------------------------------------------
+
+ \begin{acknowledgements}
+ \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
+
+Este proyecto cierra una etapa de mi formación que ha sido mucho más larga y discontinuada de lo esperado. Aprovecho para agradecer a todas las personas que me han acompañado en este camino, muchas de ellas con más ganas de verme acabar la titulación que yo mismo.
+
+En primer lugar, gracias a Liss por estar siempre a mi lado y ser mi más fiable fuente de conocimiento y sabiduría.
+
+Gracias a mi familia, mis padres no pueden haberme dicho más veces las palabras: ``Chiquillo, acaba ya la carrera''.
+
+Gracias al Departamento de Innovación y Robótica de BQ construido por Obijuan, por la creación de Zowi, por el puesto de trabajo y por tantos conocimientos adquiridos.
+
+Gracias a la Universidad de Huelva, a mi gran compañero y amigo Emilian, y a Juanma, mi coordinador. Parecía que ésto no iba a acabar nunca, ¿verdad?.
+
+Gracias a los Dofitos, porque sí.
+
+Y por último, mencionar a mis compañeros más directos en mi paso por BQ, que se han convertido en auténticos amigos. Los integrantes del Grupo de Robótica Industrial y Materiales: Santi, Jose Emilio, Chema, Raúl y Javi. En este grupo todo lo que se hacía no solamente se hacía bien, sino que se hacía bonito y original, innovar y crear desde cero era una preferencia para todos los miembros del grupo. Todos los días se volvía a casa con un corte o una quemadura nueva, pero también con una sonrisa. Gracias.
+
+
+ \end{acknowledgements}
 
 %----------------------------------------------------------------------------------------
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
