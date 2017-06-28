@@ -19,9 +19,9 @@ En el presente capítulo se exponen las distintas vías propuestas para abordar 
 
 \section{Prototipo de validación de concepto}
 
-Para dar solución al problema planteado, inicialmente se realizan dos pruebas con tecnologías diferentes. Por un lado, y por petición de la empresa, se presentó una versión basada en visión por computador, tecnología utilizada por el autor del presente proyecto en proyectos anteriores. Por otra parte, se dió una solución alternativa basada en sensores giróscopo-acelerómetro.
+Para dar solución al problema planteado, inicialmente se realizan dos pruebas con tecnologías diferentes. Por un lado, se mostró una versión basada en visión por computador. Por otra parte, se presentó una solución alternativa basada en sensores giróscopo-acelerómetro.
 
-Para ambas pruebas, se cuenta con un prototipo impreso de Zowi con una placa controladora genérica: BQ ZUM BT (ver Figura \ref{fig:BQZUM}), versión propia de BQ de la conocida Arduino UNO. Tanto el juguete como su placa controladora se están desarrollando a la fecha de las pruebas.
+Para ambas pruebas, se cuenta con un prototipo impreso de Zowi con una placa controladora: BQ Zum BT (ver Figura \ref{fig:BQZUM}), versión derivada de Arduino UNO con bluetooth incorporado y una etapa de potencia capaz de sacar hasta 3.2 amperios por sus salidas digitales. Tanto el juguete final como su placa controladora se encuentran en desarrollo a la fecha de estas pruebas.
 
 \begin{figure}
 \centering
@@ -36,11 +36,11 @@ Para ambas pruebas, se cuenta con un prototipo impreso de Zowi con una placa con
 %-----------------------------------
 \subsection{Cámara visión por computador}
 
-Se realiza una prueba piloto aprovechando el sistema de visión instalado para otro proyecto, compuesto por la cámara fija de Fanuc, 2 paneles LED de luz difusa (60W) y el software de visión Fanuc: iRvision. Se elige realizar las pruebas en ésta plataforma, y no en un ordenador convencional con matlab u opencv, por inmediatez, el sistema está ya calibrado y en funcionamiento, además de que cuenta con un rack de salidas y entradas digitales; como se ha dicho, el objetivo era comprobar la viabilidad.
+Se realiza una prueba piloto aprovechando el sistema de visión instalado para otro proyecto, compuesto por la cámara fija de Fanuc, 2 paneles LED de luz difusa (60W) y el software de visión Fanuc: iRvision. Se elige realizar las pruebas en esta plataforma y no en un ordenador convencional, con Matlab u OpenCV, por inmediatez, ya que el sistema empleado está calibrado y en funcionamiento. El objetivo de esta prueba era comprobar la viabilidad de este tipo de solución.
 
 El sistema de visión está conectado al controlador de un brazo robótico LRMate 200iD, con un módulo I/O digitales a 24 voltios. Por lo que se realiza una interfaz con 2 relés para comunicar con la placa Arduino (5V), encargada de calibrar los servos del juguete.
 
-En la figura \ref{fig:CeldaFanuc} podemos ver el área de trabajo de la celda robótica y su cámara.
+En la figura \ref{fig:CeldaFanuc} se puede ver el área de trabajo de la celda robótica y su cámara.
 
 \begin{figure}
 \centering
@@ -49,9 +49,9 @@ En la figura \ref{fig:CeldaFanuc} podemos ver el área de trabajo de la celda ro
 \label{fig:CeldaFanuc}
 \end{figure}
 
-El programa creado en Arduino recibe como entradas dos señales que indican en qué sentido se debe girar el servo. Como salida, actúan sobre el servo hacíendolo corregir su posición iterativamente 1 grado cada segundo hasta alcanzar la posición deseada.
+El programa creado en Arduino recibe como entradas dos señales que indican en qué sentido se debe girar el servo, si es que necesita modificar su posición. Como salida, actúa sobre el servo hacíendolo corregir su posición iterativamente, 1 grado cada segundo, hasta alcanzar la posición deseada.
 
-La posición deseada es definida utilizando iRvision (Software de visión de Fanuc), mediante técnicas de visión por computador (Localización de elementos entrenados, medición de distancias y ángulos entre ellos). Para el caso del ``tobillo'', buscando perpendicularidad con la ``cadera'', y para ésta, consiguiendo cierta distancia entre dos líneas paralelas. Se pueden ver las Figuras \ref{fig:Tobillo} y \ref{fig:Cadera}.
+La posición deseada es definida utilizando iRvision (Software de visión de Fanuc), mediante técnicas de visión por computador (Localización de elementos entrenados, medición de distancias y medición de ángulos entre los elementos). Para el caso del ``tobillo'', buscando perpendicularidad con la ``cadera''; y para esta, consiguiendo cierta distancia entre las dos líneas paralelas. Se pueden ver las Figuras \ref{fig:Tobillo} y \ref{fig:Cadera} para más detalle.
 
 \begin{figure}
 \centering
@@ -98,13 +98,13 @@ Tras estudiar el comportamiento del sensor, y una fase de documentación acerca 
 
 A pesar de lo atractivo de la tercera opción, no se disponía de suficiente tiempo para seguir adelante con ella, se trató de comprender el funcionamiento de las 2 librerías ya creadas.
 
-Por simplicidad, Open IMU resultaba llamativa, pero rápidamente se percibió que podía quedarse demasiado corta y que las lecturas obtenidas empleando ésta librería (los ángulos euler de pitch, roll y yaw) parecían no tener la repetibilidad necesaria para nuestra aplicación, por otro lado, hacía más de 3 años que no se realizaban cambios en su repositorio GIT, por lo que posiblemente estaba preparada para funcionar con la versión anterior de la placa, MinIMU-9 v2, con una exactitud de hasta 1 grado solamente.
+Por simplicidad, Open IMU resultaba llamativa, pero rápidamente se percibió que podía quedarse demasiado corta y que las lecturas obtenidas empleando esta librería (los ángulos euler de pitch, roll y yaw) parecían no tener la repetibilidad necesaria para nuestra aplicación, por otro lado, hacía más de 3 años que no se realizaban cambios en su repositorio GIT, por lo que posiblemente estaba preparada para funcionar con la versión anterior de la placa, MinIMU-9 v2, con una exactitud de hasta 1 grado solamente.
 
-La línea elegida fue la de la librería recomendada por Pololu (fabricante del dispositivo), dejando un poco limitado el modo de funcionar pero ofreciendo un acceso rápido a las mediciones del sensor en forma de posición en ángulos euler.
+La línea elegida fue la de la librería recomendada por el fabricante, Pololu, dejando un poco limitado el modo de funcionar pero ofreciendo un acceso rápido a las mediciones del sensor en forma de posición en ángulos euler.
 
-Para un correcto funcionamiento del magnetómetro, se han de configurar los valores máximos y mínimos de las lecturas del acelerómetro, estos 2 sensores se encuentran en el encapsulado LSM303, la librería de dicho chip proporciona un programa de Arduino que captura dichas mediciones y salva la mayor mientras movemos la placa en todas las orientaciones posibles, mostrandola por el puerto serie. Los valores obtenidos se han de escribir, sustituyendo los ``por defecto'', en la cabecera de la misma librería.
+Para un correcto funcionamiento del magnetómetro, se han de configurar los valores máximos y mínimos de las lecturas del acelerómetro, estos 2 sensores se encuentran en el encapsulado LSM303, la librería de dicho chip proporciona un programa de Arduino que captura dichas mediciones y salva la mayor mientras se mueve la placa en todas las orientaciones posibles, mostrándola por el puerto serie. Los valores obtenidos se han de escribir, sustituyendo los valores ``por defecto'', en la cabecera de la misma librería.
 
-La limitación de ésta librería que se había comentado antes , es que para obtener con precisión los ángulos euler en todas las orientaciones, se debe llamar una función de la librería \textbf{calibrateIMU()} con la placa colocada en una de las 2 posiciones que se ven en la Figura \ref{fig:IMU_positions}, lo más paralelo al suelo posible, con ésta función definimos en el espacio el 0 de los ejes X e Y del sistema, por lo que se corrigen desvíos si la posición no es totalmente horizontal, sin embargo, ésto deriva en errores que crecen en proporción a la inclinación que se de en alguno de los ejes. Se elige una de ellas configurando ciertos parámetros de la librería de Pololu en el programa principal.
+La limitación de esta librería es que, para obtener con precisión los ángulos euler en todas las orientaciones, se debe llamar a una función de la librería, \textbf{calibrateIMU()}, con la placa colocada en una de las 2 posiciones que se ven en la Figura \ref{fig:IMU_positions}, lo más paralelo al suelo posible. Con esta función se define en el espacio el 0 de los ejes X e Y del sistema, por lo que se corrigen desvíos si la posición no es totalmente horizontal; sin embargo, esto deriva en errores que crecen en proporción a la inclinación que se de en alguno de los ejes. Se elige una de ellas configurando ciertos parámetros de la librería de Pololu en el programa principal.
 
 \begin{figure}
 \centering
@@ -113,7 +113,7 @@ La limitación de ésta librería que se había comentado antes , es que para ob
 \label{fig:IMU_positions}
 \end{figure}
 
-La orientación en Z depende de la brújula y su tiempo de estabilización es lento, por ello, se piensa en emplear los giros en los otros 2 ejes, X e Y, por lo que la posición del robot ha de ser la de acostado sobre un lado, descartando las posiciones que, de entrada, parecen más razonables como boca arriba/boca abajo, o con las piernas hacia arriba. Ver Figuras \ref{fig:patas_arriba} y \ref{fig:acostado}.
+La orientación en Z depende de la brújula y su tiempo de estabilización es lento. Por esta razón, se piensa en emplear los giros en los otros 2 ejes, X e Y, de manera que la posición del robot ha de ser la de acostado sobre un lado. Se descartan las posiciones que, de entrada, parecen más razonables: boca arriba/boca abajo, o con las piernas hacia arriba. Ver Figuras \ref{fig:patas_arriba} y \ref{fig:acostado}.
 
 \begin{figure}
 \centering
@@ -134,7 +134,7 @@ La orientación en Z depende de la brújula y su tiempo de estabilización es le
 
 \subsubsection{Prueba inicial}
 
-Se programa el algoritmo empleando una máquina de estados en la misma placa controladora de Zowi con un pulsador para pasar de un estado a otro. Versión muy básica para probar el concepto. Se emplea comunicación serie para conocer el estado del sensor y una grapa impresa para acoplarlo al pié del Zowi.
+Se programa el algoritmo empleando una máquina de estados en la misma placa controladora de Zowi con un pulsador para pasar de un estado a otro. Versión muy básica para probar el concepto. Se emplea comunicación serie para conocer el estado del sensor y una grapa impresa para acoplarlo al pié de Zowi.
 
 El procedimiento programado sería:
 \begin{itemize}
@@ -145,16 +145,16 @@ El procedimiento programado sería:
 
 El modo de calibración del servo consiste en dar un primer valor a la posición que debería tener el servo, es decir, 0º para la cadera o 90º para el pie, entonces se lee el sensor para ver el error cometido y se ajusta la posición del servo teniendo en cuenta la diferencia del valor deseado y la nueva lectura, se repite hasta 2 veces.
 
-Se obtienen buenas sensaciones con éste método y se nota de inmediato que el éxito del mismo radica en la correcta calibración inicial del sensor y en una buena fijación al pié del robot, por lo que se desarrolla un zapato para montar en él el sensor y un soporte para el robot, junto a otro soporte para realizar la calibración del sensor (ya integrado en el zapato) en la misma pieza. De esta forma se garantiza la correspondencia y paralelismo de los planos de apoyo de ambas partes (robot – zapato).
+Se obtienen buenas sensaciones con este método y se nota de inmediato que el éxito del mismo radica en la correcta calibración inicial del sensor y en una buena fijación al pié del robot. 
 
 %-----------------------------------
 %	Conclusiones
 %-----------------------------------
 
 \subsection{Conclusiones}
-El método de calibración empleando visión muestra buenos resultados y es muy mejorable si se emplea software creado específicamente para la aplicación, sin embargo, las condiciones de iluminación y posición han de ser las mismas o muy parecidas para cada banco de trabajo para garantizar un buen funcionamiento del software, por lo que su instalación, puesta en marcha y configuración, son delicados y se deberían hacer in-situ. En el momento de las pruebas de validación aún se desconoce la ubicación de la fábrica y la nave de montaje -posiblemente en China o Polonia-,  la solución se encarece considerablemente si se han de realizar desplazamientos para llevar a cabo la instalación y puesta en marcha.
+El método de calibración empleando visión muestra buenos resultados y es muy mejorable si se emplea software creado específicamente para la aplicación, sin embargo, las condiciones de iluminación y posición han de ser las mismas o muy parecidas para cada banco de trabajo para garantizar un buen funcionamiento del software, por lo que su instalación, puesta en marcha y configuración, son delicados y se deberían hacer in-situ. En el momento de las pruebas de validación aún se desconocen las ubicaciones de la fábrica y la nave de montaje. La solución se encarecería considerablemente si se han de realizar desplazamientos largos para llevar a cabo la instalación y puesta en marcha.
 
-Con las IMUs se obtuvieron buenos resultados y se tenía bastante claro que se quería seguir adelante con ellas por su bajo coste y y su fácil implementación. Quedaba afinar el algoritmo de calibración implementando una máquina de estados mucho más robusta y endureciendo el criterio de validación automática de una buena calibración para obtener mejores resultados. En el siguiente subcapítulo se desarrolla su evolución.
+Con las IMUs se obtuvieron buenos resultados y se tenía bastante claro que se quería seguir adelante con ellas por su bajo coste y su fácil implementación. Pendiente quedaba afinar el algoritmo de calibración, implementando una máquina de estados mucho más robusta y endureciendo el criterio de validación automática de una buena calibración, para obtener mejores resultados. En el siguiente subcapítulo se desarrolla su evolución.
 
 %----------------------------------------------------------------------------------------
 %	SECTION 3: Laboratorio
@@ -162,7 +162,7 @@ Con las IMUs se obtuvieron buenos resultados y se tenía bastante claro que se q
 
 \section{Prototipo de laboratorio}
 
-Se decide continuar con la solución de las IMUs y se producen reuniones cada pocos días/semanas entre los diferentes grupos implicados en el desarrollo del juguete Zowi (mecánica, hardware, producto, automatización...) dónde las especificaciones el banco de calibración van tomando forma en función de los resultados obtenidos. En la presente sección se mostrará la línea de evolución del prototipo, mencionando las características y mejoras más relevantes añadidas, así como las pruebas realizadas antes de pasar al desarrollo de la versión final.
+Se decide continuar con la solución de las IMUs. En la presente sección se mostrará la línea de evolución del prototipo, que pasa por diferentes fases, mencionando las características y mejoras más relevantes añadidas en cada una de ellas, así como las pruebas realizadas antes de pasar al desarrollo de la versión final.
 
 \subsection{Línea de evolución}
 
@@ -170,9 +170,9 @@ Tras elegir la línea de los sensores IMU, se comienza a trabajar de inmediato e
 
 \subsubsection{Primeras mejoras}
 
-La máquina de estados es mejorada, diferenciando calibraciones malas de calibraciones buenas. Se añaden una indicador led y uno acústico para resaltar el resultado con diferentes sonidos. Esta mejora se mantendrá hasta la versión final del producto.
+La máquina de estados es mejorada, diferenciando calibraciones malas de calibraciones buenas. Se añaden un indicador led y uno acústico para resaltar el resultado con diferentes sonidos. Esta mejora se mantendrá hasta la versión final del producto.
 
-La siguiente necesidad a cubrir sería garantizar que el robot comparte el plano con el sensor, que ha de ser calibrado antes de colocarse en el robot como explicamos en la sección anterior. Hasta ahora el sensor era fijado utilizando una grapa impresa (Ver Figura \ref{fig:grapa}).
+La siguiente necesidad a cubrir sería garantizar que el robot comparte el plano con el sensor, que ha de ser calibrado antes de colocarse en el robot como se ha explicado en la sección anterior. Hasta ahora el sensor era fijado utilizando una grapa impresa (Ver Figura \ref{fig:grapa}).
 
 \begin{figure}[h]
 \centering
@@ -182,7 +182,7 @@ La siguiente necesidad a cubrir sería garantizar que el robot comparte el plano
 \end{figure}
 
 Se monta el sensor en una pieza especialmente diseñada e impresa para colocarla en el pié de Zowi, razón por la que es llamada ``Zapato''.
-Se crea también una base donde se coloca el Zowi, con un área para colocar el zapato en el momento de su inicialización, dónde el sensor es calibrado. Se puede ver el banco en la Figura \ref{fig:banco_1zapato}.
+Se crea también una base donde se coloca a Zowi, con un área para colocar el zapato en el momento de su inicialización, dónde el sensor es calibrado. Ambos soportes están integrados en la misma pieza, de esta forma se garantiza la correspondencia y paralelismo de los planos de apoyo de ambas partes (robot – zapato). Se puede ver el banco en la Figura \ref{fig:banco_1zapato}.
 
 
 \begin{figure}[h]
@@ -192,7 +192,7 @@ Se crea también una base donde se coloca el Zowi, con un área para colocar el 
 \label{fig:banco_1zapato}
 \end{figure}
 
-El algoritmo hasta ahora pasaba por calibrar una pierna del juguete solamente, haciendo ambas partes -tobillo y cadera-. Se mejora este punto, conectando a la placa controladora 2 sensores IMUs. La comunicación con la MinIMU-9 se realiza a través de I\textsuperscript{2}C, y su interfaz permite seleccionar facilmente entre 2 direcciones distintas para el giróscopo, y lo mismo para el acelerómetro/brújula. Para ello solamente tenemos que conectar SA0 a GND. (Ver Figura \ref{fig:minimu_sa0} y Cuadro \ref{tablei2c})
+El algoritmo hasta ahora pasaba por calibrar una pierna del juguete solamente, haciendo ambas partes -tobillo y cadera-. Se mejora este punto, conectando a la placa controladora 2 sensores IMUs. La comunicación con la MinIMU-9 se realiza a través de I\textsuperscript{2}C, y su interfaz permite seleccionar fácilmente entre 2 direcciones distintas para el giróscopo, y lo mismo para el acelerómetro/brújula. Para ello solamente es necesario conectar SA0 a GND. Ver Figura \ref{fig:minimu_sa0} y Cuadro \ref{tablei2c}.
 
 \begin{table}[h]
 \centering
@@ -215,7 +215,7 @@ LSM303D (acc+magnet) & 0011101b & 0011110b \\
 \label{fig:minimu_sa0}
 \end{figure}
 
-Es necesario cambiar las direcciones de una de las placas, de lo contrario ambas tendrían las mismas direcciones de esclavo I\textsuperscript{2}C y causaría un mal funcionamiento el intentar leer de una de ellas. Además, se mejora el banco impreso para poder albergar los 2 zapatos y la máquina de estados, implementando la calibración de ambas piernas y aumentando número de iteraciones e incluyendo un filtrado de múltiples medidas para evitar leer ruido. Ver Figura \ref{fig:banco_2zapato}.
+Es necesario cambiar las direcciones de una de las placas, de lo contrario ambas tendrían las mismas direcciones de esclavo I\textsuperscript{2}C y tratar de leer de ellas causaría un mal funcionamiento. Además, se mejora el banco impreso para poder albergar los 2 zapatos; se mejora también la máquina de estados, implementando la calibración de ambas piernas, aumentando número de iteraciones e incluyendo un filtrado de múltiples medidas para evitar leer ruido. Ver Figura \ref{fig:banco_2zapato}.
 
 \begin{figure} [h]
 \centering
@@ -224,13 +224,13 @@ Es necesario cambiar las direcciones de una de las placas, de lo contrario ambas
 \label{fig:banco_2zapato}
 \end{figure}
 
-La calibración/inicialización de los sensores muestra resultados, como se ha comentado anteriormente, no tan buenos cuando el sensor se inclina notablemente. Por ello que el éxito de la calibración de la cadera (0º de set point) es mayor que el de la calibración del pié (90º). Se considera corregir el set point de los piés en la fase de calibración de los sensores.
+La calibración/inicialización de los sensores muestra resultados no tan buenos cuando el sensor se inclina notablemente. Por ello que el éxito de la calibración de la cadera (0º de set point) sea mayor que el de la calibración del pié (90º). Se considera corregir el set point de los piés en la fase de calibración de los sensores.
 
-Se diseñan unos cajetines para el ajuste del sensor a los 90º, de modo que antes de comenzar la calibración de los juguetes, el sensor (zapato), debe ser calibrado en las posiciones horizontal y vertical.
+Se diseñan unos cajetines para el ajuste del sensor a los 90º, de modo que antes de comenzar la calibración de los juguetes, el sensor (zapato) debe ser calibrado en las posiciones horizontal y vertical.
 
-Se impide avanzar en el procedimiento si tras calibrar los sensores al inicio, las medidas obtenidas difieren demasiado de 0º en ambos ejes, se vuelve a un estado en el que se espera pulsar el botón para volver a realizar la calibración, es decir, se comienza a implementar una gestión de errores.
+Se impide avanzar en el procedimiento si, tras calibrar los sensores al inicio, las medidas obtenidas difieren demasiado de 0º en ambos ejes. En caso de no avanzar, se vuelve a un estado en el que se espera pulsar el botón para volver a realizar la calibración, es decir, se comienza a implementar una gestión de errores.
 
-Se añaden al conjunto un nivel y unos tornillos para regular la inclincación y mantener todo lo más horizontal posible antes de comenzar. Ver Figura \ref{fig:banconivel}.
+Se añaden al conjunto un nivel y unos tornillos para regular la inclincación y mantener todas las partes del sistema lo más cerca posible a una posición completamente en horizontal. Ver Figura \ref{fig:banconivel}.
 
 \begin{figure}
 \centering
@@ -244,11 +244,11 @@ Se añaden al conjunto un nivel y unos tornillos para regular la inclincación y
 %-----------------------------------
 \subsubsection{Tomando forma}
 
-Hasta ahora todas las pruebas se habían realizado en la misma controladora de Zowi. Se recibe información sobre la placa que será empleada para los robots (en desarrollo por el Dpto. de Hardware), se conoce que el número de entradas/salidas será reducido y ajustado a los sensores/actuadores del propio juguete, por lo que realizar todas las conexiones que planteamos en nuestras pruebas en la misma placa junto a todos los periféricos de zowi no es una opción.
+En este punto todas las pruebas se habían realizado en la misma controladora de Zowi. Se recibe información sobre la placa controladora que irá instalada en los robots y se conoce que el número de entradas/salidas será reducido y ajustado a los sensores/actuadores del propio juguete, por lo que realizar todas las conexiones que se plantean en nuestras pruebas en la misma placa junto a todos los periféricos de Zowi no es una opción.
 
-Se plantea el uso de otra placa conectada por I\textsuperscript{2}C a la placa controladora del Zowi (por ahora una ZUM BT) y la librería Wire.h de Arduino. Zum BT es una versión de la Arduino UNO con bluetooth incorporado, y una etapa de potencia capaz de sacar hasta 3.2 amperios por sus salidas digitales.
+Se plantea el uso de otra placa conectada por I\textsuperscript{2}C a la placa controladora de Zowi y la librería Wire.h de Arduino. 
 
-La nueva placa empleada sería una Freeduino Mega, versión basada en la Mega, es elegida por ser compatible con todo lo desarrollado y por su bajo coste para la empresa y por presentar una cantidad de entradas y salidas mayor que los modelos UNO.
+La nueva placa empleada sería una Freeduino Mega, versión basada en la Arduino Mega, es elegida por ser compatible con todo lo desarrollado, por su bajo coste y por presentar una cantidad de entradas y salidas mayor que los modelos UNO.
 
 Se vuelven a diseñar unos bancos para calibrar los sensores tanto horizontal como verticalmente, es decir, inicializar ejes y ajustar el eje Y en vertical. Todo en el mismo espacio, como se puede ver en la Figura \ref{fig:bancov3}.
 
@@ -272,7 +272,7 @@ Como característica \textbf{principal}, se diseña una interfaz de comunicació
 
 La máquina de estados se hace más robusta en general, detectando fallos y facilitando la recuperación para un correcto funcionamiento.
 
-Al final de esta etapa se conoce la controladora que llevará el juguete, así como la versión -prototipo- de Zowi definitiva, sinterizada por láser, en lugar de inyectada, pero ya con sus dimensiones y forma finales. Se puede ver en la Figura \ref{fig:zowi-sls}.
+Al final de esta etapa se conoce, además de la controladora que llevará el juguete, la versión definitiva mecánica de Zowi, un prototipo sinterizado por láser ya con sus dimensiones y forma finales. Se puede ver en la Figura \ref{fig:zowi-sls}. 
 
 \begin{figure}
 \centering
@@ -283,13 +283,13 @@ Al final de esta etapa se conoce la controladora que llevará el juguete, así c
 
 \subsubsection{Prototipo final: Banco de Calibración}
 
-En este punto se produce el mayor cambio en el proyecto. La solución de comunicación por I\textsuperscript{2}C entre las diferentes placas asumía que la controladora de Zowi tendría accesibles los pines al micro para I\textsuperscript{2}C y SPI (cosa incierta) y, además, hacía necesario el acceso al interior del robot, que en principio, podría llegar ya montado de las etapas de producción anteriores. Se sugiere implementar la comunicación a través del puerto USB que tendrá la placa de Zowi.
+En este punto se produce el mayor cambio en el proyecto. La solución de comunicación por I\textsuperscript{2}C entre las diferentes placas asumía que la controladora de Zowi tendría accesibles los pines al micro para I\textsuperscript{2}C y SPI y, además, hacía necesario el acceso al interior del robot. El robot podría llegar ya montado de las etapas de producción anteriores. Se sugiere implementar la comunicación a través del puerto USB que tendrá la placa de Zowi.
 
-Las controladoras Arduino pueden ser esclavos serie por USB, no maestros, realizar una comunicación serie de una a otra no es posible, de ahí que se plantee usar una Raspberry PI (Figura \ref{fig:raspi}) como maestro Serie de ambas placas, esclavos serie, sustituyendo la interfaz I\textsuperscript{2}C implementada en la versión anterior y haciendo de puente entre ambas.
+Las controladoras Arduino pueden ser``esclavos'' serie por USB pero no maestros, realizar una comunicación serie de una a otra no es posible utilizando el cable USB, de ahí que se plantee usar una Raspberry PI (Figura \ref{fig:raspi}). Un ordenador, con el driver correcto, podrá establecer una conexión serie por USB con ambas placas gracias al FTDI de cada controladora, que convierte de USB a UART. Se sustituye entonces la interfaz I\textsuperscript{2}C implementada en la versión anterior por una interfaz serie con la Raspberry haciendo de puente entre ambas Arduinos.
 
-Se contempló la posibilidad de quitar la Mega y emplear solamente la Raspberry como núcleo del sistema, sin embargo, eso conllevaría rehacer gran parte del trabajo y encontrar la forma de hacer funcionar los sensores con éste dispositivo, lo que requería un tiempo que no se tenía.
+Se contempló la posibilidad de quitar la Mega y emplear solamente la Raspberry como núcleo del sistema, sin embargo, eso conllevaría rehacer gran parte del trabajo y encontrar la forma de hacer funcionar los sensores con este dispositivo, lo que requería gran cantidad de tiempo.
 
-Una primera iteración fue la de sustituir la comunicación por I\textsuperscript{2}C, por la comunicación serie, se adaptaron los programas de MEGA y de ZUM. La comunicación era unidireccional. Mega > Raspberry > Zowi. La Raspberry PI funcionaba como mero driver de comunicaciones:
+Una primera iteración fue la de sustituir la comunicación por I\textsuperscript{2}C, por la comunicación serie, se adaptaron los programas de MEGA y de ZUM. La comunicación sería unidireccional. Mega > Raspberry > Zowi. La Raspberry PI funcionaría como mero driver de comunicaciones:
 \begin{itemize}
   \item Se modificaron los comandos enviados con la librería Wire.h desde la freeduino Mega para ser comandos enviados por serie (Librería Serial.h) con ciertos caracteres de inicio y fin de comunicación a modo de protocolo (desarrollado específicamente para esta aplicación).
   \item Se implementó en la Raspberry un programa en Python que hacía de intérprete. Haciendo escucha a la comunicación serie abierta con la Freeduino Mega, y enviando comandos a la placa controladora de Zowi a través de la comunicación Serie abierta con ella.
@@ -308,11 +308,11 @@ Se decide introducir la electrónica en un armario eléctrico y, a su vez, emple
 
 Se introdujo un display LCD conectado a la Mega por I\textsuperscript{2}C que hacía más fácil la interacción del usuario con el banco de calibración y se trabajó en mejorar la máquina de estados para hacer el uso del sistema más amigable; y se mejoró el conexionado añadiendo una PCB custom como shield de la Mega, que ofrecía borneros para conectar los leds, display LCD, IMUs, finales de carrera y botones.
 
-Durante el proceso de calibración se guardarán los offsets calculados en ciertas posiciones de la memoria EEPROM de la placa controladora de Zowi. Se usa para ello la librería EEPROM.h. Esto es necesario para el funcionamiento de los programas por defecto, cuyas librerías (zowi.h y oscillator.h) están configuradas para usar los valores en dichas posiciones de la memoria.
+Durante el proceso de calibración se guardarán los offsets calculados en ciertas posiciones de la memoria EEPROM de la placa controladora de Zowi. Se usa para ello la librería EEPROM.h. Esto es necesario para el funcionamiento de los programas por defecto, cuyas librerías (zowi.h y oscillator.h) están configuradas para usar los valores de corrección en dichas posiciones de la memoria.
 
 Multitud de mejoras software definitivas fueron implementadas en esta fase para aumentar su funcionalidad, en el subcapítulo siguiente se verán en mayor detalle, a destacar:
 \begin{itemize}
-  \item Raspberry utilizada como programador, empleando la utilidad AVRDUDE cargará el programa de calibración en cada Zowi.
+  \item Raspberry utilizada como programador, empleando la utilidad AVRDUDE descargará el programa de calibración en cada Zowi, también descargará el programa final.
   \item Cargará, del mismo modo y al finalizar la calibración, el programa de fábrica con que saldrá a la venta el producto. Sobrescribiendo el de calibración.
   \item Se le habilita acceso remoto por SSH y por XRDP para poder acceder a ella desde fuera.
   \item Se instala un servidor de MySQL y se configura para guardar datos tanto en local como en nuestros servidores.
@@ -326,9 +326,9 @@ Multitud de mejoras software definitivas fueron implementadas en esta fase para 
 \subsection{Pruebas realizadas}
 
 
-Durante todo el desarrollo se han realizado pruebas, sin embargo, se comentan los resultados la prueba previa a MP (massive production), realizada con el prototipo final. La Figura \ref{fig:pre-mp} muestra el armario de calibración preparado para la prueba.
+Durante todo el desarrollo se han realizado pruebas, sin embargo, se comentan solamente los resultados de la prueba previa a MP (massive production), realizada con el prototipo final. La Figura \ref{fig:pre-mp} muestra el armario de calibración preparado para la prueba.
 
-Los operadores fueron compañeros que no habían tenido contacto alguno con la máquina, haciendo de operarios de forma distraída.
+Los operadores durante esta prueba fueron personas que no habían tenido contacto alguno con la máquina.
 \begin{figure}
 \centering
 \includegraphics[width=110mm]{Figures/pre-mp}
@@ -336,9 +336,9 @@ Los operadores fueron compañeros que no habían tenido contacto alguno con la m
 \label{fig:pre-mp}
 \end{figure}
 
-Se logran calibrar satisfactoriamente 62 juguetes, con solamente 1 contratiempo: Al no respetar el protocolo en cuanto a órden de operaciones, concretamente, intento de programar la placa sin energizar. Si se intenta programar la placa conectada pero sin encender, el programador AVRDude realiza hasta 10 intentos de programarla sin éxito; al energizarla durante los intentos, según en qué momento se haga, puede ser recuperable, o puede llevar al sistema a un estado de fallo. Se tuvo que reiniciar y volver a hacer la calibración de los zapatos. A pesar de ser un error de operador, se intenta corregir para la versión final.
+Se logran calibrar satisfactoriamente 62 juguetes, con solamente 1 contratiempo: Al no respetar el protocolo en cuanto a orden de operaciones, concretamente, intento de programar la placa sin energizar. Si se intenta programar la placa conectada pero sin encender, el programador AVRDude realiza hasta 10 intentos de programarla sin éxito; al energizarla durante los intentos, según en qué momento se haga, puede ser recuperable, o puede llevar al sistema a un estado de fallo. Se tuvo que reiniciar y volver a hacer la calibración de los zapatos. A pesar de ser un error del operador, se intenta corregir para la versión final.
 
-Un total de 4 veces se produce una calibración mala, inducidas para poner a prueba el sistema, el sistema notifica (Display y sonido) la calibración como mala y se necesita que se vuelva a pulsar el botón. De ahí una calibración de apenas unos segundos en las gráficas siguientes, por no tener que conectar y calzar al juguete).
+Un total de 4 veces se produce una calibración mala, inducidas para poner a prueba el sistema, el sistema notifica (Display y sonido) la calibración como mala y pide que se vuelva a pulsar el botón. De ahí una calibración de apenas unos segundos en las gráficas siguientes por no requerir conectar y calzar al juguete).
 
 Analizando la información extraída de la base de datos tras las calibraciones, se muestra (Figura \ref{fig:tiempos}) Segundos vs. n\textsuperscript{o} Zowi, una segunda gráfica (Figura \ref{fig:ok-nok}) muestra 1 para calibraciones válidas, 0 para las declaradas fallidas. Los tiempos del primer y último registro no son representativos.
 
@@ -362,7 +362,7 @@ Analizando la información extraída de la base de datos tras las calibraciones,
 
 \section{Armarios finales}
 
-El trabajo asignado al autor del proyecto debió haber concluido con el prototipo presentado en el subcapítulo anterior, dejando por diseñar una versión definitiva de los soportes y zapatos del banco al Dpto. de Mecánica de BQ, y el montaje de tantos armarios y bancos como fuese necesario para abordar la producción de todos los juguetes a Rosti (empresa de extrusión de plásticos y montaje subcontratada en Polonia), encargados del ensamblado de los robots Zowi; sin embargo, se decidió realizar el montaje de 2 armarios con ligeras modificaciones y planos eléctricos para enviar a Polonia ya probados y validados. Ver armarios en Figura \ref{fig:armariosFinales}.
+El trabajo a realizar en el presente proyecto pudo haber concluido con el prototipo presentado en el subcapítulo anterior, dejando a terceros la realización de una versión definitiva de los soportes y zapatos del banco, así como el montaje de tantos armarios y bancos como fuese necesario para abordar la producción de todos los juguetes. Sin embargo, se decidió realizar el montaje de 2 armarios finales con ligeras modificaciones, documentación y planos eléctricos. Armarios finales ya probados y validados para su envío a fábrica. Ver armarios en Figura \ref{fig:armariosFinales}.
 
 \begin{figure}
 \centering
@@ -373,11 +373,11 @@ El trabajo asignado al autor del proyecto debió haber concluido con el prototip
 
 Modificaciones destacables respecto al prototipo:
 \begin{itemize}
-  \item Armario de componentes eléctricos separado de la parte mecánica, se siguieron utilizando los diseños impresos de versiones anteriores para validación del funcionamiento, pero las piezas finales quedaban a cargo del Dpto. de Mecánica. Éste nuevo armario sería más amplio que el anterior.
-  \item Mangueras de cables más largas (pues armario y banco de calibración irán separados).
+  \item Armario de componentes eléctricos separado de la parte mecánica, se siguieron utilizando los diseños impresos de versiones anteriores para validación del funcionamiento, pero las piezas finales quedarían a cargo de otro departamento. Este nuevo armario sería más amplio que el anterior.
+  \item Mangueras de cables más largas (armario y banco de calibración irán separados).
   \item Pulsador exterior con una manguera de cable para ser colocado donde se desee en fábrica, en lugar del pulsador en el lateral del armario de la versión anterior.
   \item Conexión USB y Ethernet por pasamuros al interior del armario.
-  \item Cambios en el diseño del cajetín del display LCD, pues el armario irá colocado a la altura de los ojos del operador.
+  \item Cambios en el diseño del cajetín del display LCD. El armario irá colocado a la altura de los ojos del operador.
 \end{itemize}
 
 %-----------------------------------
@@ -387,7 +387,7 @@ Modificaciones destacables respecto al prototipo:
 
 \subsubsection{Arquitectura y conexiones}
 
-El diagrama que se puede ver en la Figura \ref{fig:diagFinal}, muestra, a grandes rasgos, un esquema de las conexiones entre los principales dispositivos que intervienen en el sistema. El sistema completo consta del armario eléctrico, además del juguete Zowi conectado al armario. Por ello se muestran en el esquema tanto las placas internas del armario (Mega y Raspberry), como la placa controladora de Zowi (Zum).
+El diagrama que se puede ver en la Figura \ref{fig:diagFinal} muestra, a grandes rasgos, un esquema de las conexiones entre los principales dispositivos que intervienen en el sistema. El sistema completo consta del armario eléctrico, además del juguete Zowi conectado al armario. Por ello se muestran en el esquema tanto las placas internas del armario (Mega y Raspberry), como la placa controladora de Zowi (Zum).
 
 \begin{figure}
 \centering
@@ -428,21 +428,21 @@ Esta placa hace de cerebro del sistema a pesar de ser alimentada a través de la
 \label{fig:arduinoMega}
 \end{figure}
 
-Recibe las lecturas de los sensores IMU, tiene conectados los finales de carrera, interruptor, pulsador, panel LCD, buzzer y leds. Todas las conexiones cableadas de entrada/salida, así como la alimentación pasan por un shield diseñado para ésta aplicación.
+Recibe las lecturas de los sensores IMU, tiene conectados los finales de carrera, interruptor, pulsador, panel LCD, buzzer y leds. Todas las conexiones cableadas de entrada/salida, así como la alimentación pasan por un shield diseñado para esta aplicación.
 
-Define una máquina de estados que mueve al operador por todos los pasos de la calibración y controla a la raspberry mediante un protocolo de instrucciones implementado para este fin que usa como canal el puerto serie por USB, tambien empleado para hacer llegar instrucciones a la placa de Zowi.
+Define una máquina de estados que mueve al operador por todos los pasos de la calibración y controla a la Raspberry mediante un protocolo de instrucciones implementado para este fin, que usa como canal el puerto serie por USB, tambien empleado para hacer llegar instrucciones a la placa de Zowi.
 
-Podemos decir que Mega es la encargada de interactuar con el exterior y, dentro de nuestro sistema, realiza las funciones de un PLC. Para ello se ha elegido cuidadosamente cómo conectar los diferentes componentes a sus entradas/salidas, en el Anexo \ref{app:pinoutMega} se puede consultar el pin-out de ésta placa:
+Se puede decir que Mega es la encargada de interactuar con el exterior y, dentro de nuestro sistema, realiza las funciones de un PLC. Para ello se ha elegido cuidadosamente cómo conectar los diferentes componentes a sus entradas/salidas, en el Anexo \ref{app:pinoutMega} se puede consultar el pin-out de esta placa:
 \begin{itemize}
   \item Leds y buzzer necesitan PWM para poder configurar los sonidos/colores.
   \item Los pulsadores y finales de carrera se han conectado a entradas que tienen asociadas resistencias de pull-up, conectadas fácilmente por software.
-  \item Se ha alimentado por Vin en lugar de por USB para poder alimentar a todos sus dispositivos.
+  \item Se ha alimentado por Vin en lugar de por USB para poder suplir a todos sus dispositivos.
 \end{itemize}
 
 Información sobre software en la Subsección \ref{subsec:Software}. Para conocer con detalle las conexiones se pueden consultar los documentos del Anexo \ref{app:planosElectricos}.
 
 \subsubsection{Shield Mega}
-Se emplea el diseño de la shield de la versión prototipo del armario. En este caso se mandan a fabricar las PCBs, ya que nuestra fresadora no dió unos resultados tan profesionales.
+Se emplea el diseño de la shield de la versión prototipo del armario. En este caso se mandan a fabricar las PCBs, ya que la fresadora utilizada para el prototipo no dio unos resultados tan profesionales.
 
 \begin{figure}
 \centering
@@ -466,7 +466,7 @@ Los esquemáticos y gerbers con el layout del diseño de la PCB se pueden consul
 
 \subsubsection{Raspberry PI 2}
 
-Este ordenador (Figura \ref{fig:raspi}) aporta muchísimas mejoras de fácil implementación al sistema, además de su función principal, hacer de enlace entre Mega y la controladora de Zowi. Éstas mejoras serán definidas en la Subsección \ref{subsec:Software}, apartado dedicado al software. Se pueden consultar las especificaciones en el Anexo \ref{app:raspi-specs}.
+Este ordenador (Figura \ref{fig:raspi}) aporta muchísimas mejoras de fácil implementación al sistema además de su función principal, que es hacer de enlace entre Mega y la controladora de Zowi. Estas mejoras serán definidas en la Subsección \ref{subsec:Software}, apartado dedicado al software. Se pueden consultar las especificaciones en el Anexo \ref{app:raspi-specs}.
 
 \begin{figure}
 \centering
@@ -477,11 +477,11 @@ Este ordenador (Figura \ref{fig:raspi}) aporta muchísimas mejoras de fácil imp
 
 Comunica con Mega y con las controladoras de los Zowi (Zum), para ello utiliza protocolo serie por cable USB con cada una de las placas. Además, por Ethernet, se puede acceder a ella por SSH (puerto 22) y por XRDP (puerto 3389) desde la misma red local o desde internet configurando propiamente el NAT; y una IP y puerto pueden ser configurados para guardar datos de calibración contra una base de datos remota.
 
-Es alimentada por su toma microUSB, a través de un transformador conectado al Schuko del armario. Se encarga de alimentar y programar por USB a los Zowi, para lo que ha sido necesario desbloquear el límite de corriente suministrada por puerto USB por el sistema operativo (Se necesita suficiente potencia para mover los servos). También limenta a la Mega por su pin de 5V+, para lo que ha sido necesario elevar dicha tensión. Una vez más, se pueden ver los planos eléctricos para mayor detalle, Anexo \ref{app:planosElectricos} y Anexo \ref{app:planosEle2}.
+Es alimentada por su toma microUSB, a través de un transformador conectado al Schuko del armario. Se encarga de alimentar y programar por USB a los Zowi, para lo que ha sido necesario desbloquear el límite de corriente suministrada por puerto USB por el sistema operativo (Se necesita suficiente potencia para mover los servos). También alimenta a la Mega por su pin de 5V+, para lo que ha sido necesario elevar dicha tensión. Una vez más, se pueden ver los planos eléctricos para mayor detalle, Anexo \ref{app:planosElectricos} y Anexo \ref{app:planosEle2}.
 
 \subsubsection{Power Boost}
 
-La Mega debe ser alimentada a más de 7V. Para reducir número de transformadores y el espacio ocupado, se decide alimentarla a través de la raspberry.
+La Mega debe ser alimentada a más de 7V. Para reducir número de transformadores y el espacio ocupado, se decide alimentarla a través de la Raspberry. 
 
 \begin{figure}
 \centering
@@ -515,7 +515,7 @@ Como se ha comentado anteriormente, Zowi también forma parte del sistema. Su co
 
 \subsubsection{Banco soporte Final de Zowi y zapatos}
 
-Para validaciones y durante todo el desarrollo del proyecto -así como para su uso en Madrid, tras acabar la fase de producción en fábrica- se han empleado, y emplean, los diseños realizados por el autor, cuyas vistas se pueden consultar en el Anexo \ref{app:piezas}. No se especifican cotas de tolerancias por estar pensados para fabricar con impresoras 3D de filamento fundido, donde las dimensiones finales varían por parámetros como la temperatura o la velocidad de extrusión de la máquina.
+Para validaciones y durante todo el desarrollo del proyecto, así como para su uso en el servicio técnico tras acabar la fase de producción se han empleado -y emplean- los diseños de piezas realizados, cuyas vistas se pueden consultar en el Anexo \ref{app:piezas}. No se especifican cotas de tolerancias por estar pensados para fabricar con impresoras 3D de filamento fundido, donde las dimensiones finales varían por parámetros como la temperatura, la velocidad de extrusión, o el modelo de impresora o de sus componentes.
 
 \begin{figure}
 \centering
@@ -524,7 +524,7 @@ Para validaciones y durante todo el desarrollo del proyecto -así como para su u
 \label{fig:bancoFabrica}
 \end{figure}
 
-Sin embargo, el utillaje empleado en cadena de montaje (Figura \ref{fig:bancoFabrica}) fue rediseñado por el Dpto. de Mecánica y fabricado por sinterizado selectivo por láser, para lograr un acabado más preciso y mayor resistencia. Le añadieron palancas para fijar cada juguete y mejoraron los zapatos para facilitar la colocación.
+Sin embargo, el utillaje empleado en cadena de montaje (Figura \ref{fig:bancoFabrica}) fue rediseñado por otro departamento y fabricado por sinterizado selectivo por láser, para lograr un acabado más preciso y mayor resistencia. Se le añadieron palancas para fijar cada juguete y se mejoraron los zapatos para facilitar la colocación del juguete.
 
 %-----------------------------------
 %	SUBSECTION 2
@@ -532,12 +532,12 @@ Sin embargo, el utillaje empleado en cadena de montaje (Figura \ref{fig:bancoFab
 
 \subsection{Software}
 \label{subsec:Software}
-En esta subsección se explicarán los aspectos relacionados con la programación del sistema y los algoritmos empleados. Se ha divido en tres partes, una para cada uno de los tres dispositivos principales, Mega, Raspberry y Zowi. Puede ser útil, para entender el funcionamiento del sistema, consultar los anexos \ref{app:usermanual}, \ref{app:pythoncode}, \ref{app:megacode} y \ref{app:zowicode}, donde se muestra el Manual de Usuario y el Código desarrollado.
+En esta subsección se explicarán los aspectos relacionados con la programación del sistema y los algoritmos empleados. Se ha divido en tres partes, una para cada uno de los tres dispositivos principales, Mega, Raspberry y Zowi. Puede ser útil, para entender el funcionamiento del sistema, consultar los anexos \ref{app:usermanual}, \ref{app:pythoncode}, \ref{app:megacode} y \ref{app:zowicode}, donde se muestra el Manual de Usuario y el código desarrollado.
 
 \subsubsection{Mega}
-Este dispositivo se puede programar utilizando el lenguaje de Arduino,  que es una adaptación de C++ que proveniene de avr-libc y provee de una librería de C de alta calidad para usar con GCC en los microcontroladores AVR de Atmel y muchas funciones específicas para los MCU AVR de Atmel. Su simplicidad y la implicación por parte de la comunidad hacen realmente fácil y rápido su uso y aprendizaje.
+Este dispositivo se puede programar utilizando el lenguaje de Arduino,  que es una adaptación de C++ que proviene de avr-libc y provee de una librería de C de alta calidad para usar con GCC en los microcontroladores AVR de Atmel y muchas funciones específicas para los MCU AVR de Atmel. Su simplicidad y la implicación por parte de la comunidad hacen realmente fácil y rápido su uso y aprendizaje.
 
-El programa principal ha sido creado en el entorno de Arduino, en un fichero (.ino). Se emplean las funciones de Arduino precocinadas y se extiende de librerías de Arduino, programadas en C++, para todo lo posible, a destacar:
+El programa principal ha sido creado en el entorno de Arduino, en un fichero (.ino). Se emplean las funciones precocinadas de Arduino y se extiende para todo lo posible de sus librerías programadas en C++. A destacar:
 \begin{itemize}
   \item LiquidCrystal para escribir al display LCD.
   \item Wire para la comunicación  I\textsuperscript{2}C.
@@ -546,7 +546,7 @@ El programa principal ha sido creado en el entorno de Arduino, en un fichero (.i
 
 El programa de Mega sigue una estructura de máquina de estados que se encarga de llevar al operador por los diferentes pasos del proceso de calibración, es aquí dónde se toman las lecturas de las posiciones de los servos y se decide cuánto se han de mover, dónde se valida el resultado de la calibración y dónde se produce la interacción entre la máquina y el usuario. Se puede decir que es el principal dispositivo del sistema.
 
-Para conocer la lógica de la máquina de estados, se pueden consultar los diagramas del Anexo \ref{app:megadiag}, para conocer el proceso de uso, como operador, se puede consultar el manual de usuario del Anexo \ref{app:usermanual}.
+Para conocer la lógica de la máquina de estados, se pueden consultar los diagramas del Anexo \ref{app:megadiag}. Para conocer el proceso de uso, como operador, se puede consultar el manual de usuario del Anexo \ref{app:usermanual}.
 
 \paragraph{Protocolo de comunicación}
 
@@ -581,7 +581,7 @@ Como entrada, Mega recibirá ``M'' o ``B'' desde Raspberry en los estados que re
 
 \paragraph{Configuración}
 
-Mega permite hasta 3 canales adicionales de comunicación serie, Serial1 utiliza los pines 19 como RX y 18 como TX para una comunicación serie TTL a 9600 baudios. Gracias a un cable TTL-USB, es posible debugear y desarrollar fácilmente, aún teniendo utilizado el puerto serie habitual para comunicar con Raspberry.
+Mega permite hasta 3 canales adicionales de comunicación serie, Serial1 utiliza los pines 19 como RX y 18 como TX para una comunicación UART TTL a 9600 baudios. Gracias a un cable USB-TTL, es posible debugear y desarrollar fácilmente, aún teniendo utilizado el puerto serie habitual para comunicar con Raspberry por usb.
 
 Programación para los componentes acústicos y luminosos utilizando las librerías stándar de Arduino, que permiten emitir un sonido o establecer el color de una luz con una simple línea de código, también se recurre al uso de las resistencias de pull-up integradas, activadas en la declaración del tipo de pin, para reducir la cantidad de electrónica necesaria para los finales de carrera y pulsadores.
 
@@ -591,33 +591,33 @@ Este algoritmo se ejecuta para la correcta calibración de cada uno de los jugue
 
 Inicialmente se mandan los servos del robot Zowi a las posiciones correspondientes a 90º, se recuerda que el rango del servo es 0-180º, y que el juguete necesita un rango de solamente unos 80º.
 
-La calibración consiste en tomar la lectura de los sensores IMU, de cada sensor interesan 2 orientaciones, una de ellas directamente relacionada con la posición de la cadera del robot, y la otra con el pié. Leyendo ambos sensores se obtienen las 4 posiciones de los servos.
+La calibración consiste en tomar la lectura de los sensores IMU, de cada sensor interesan 2 orientaciones, una de ellas directamente relacionada con la posición de la cadera del robot, y la otra con el pié. Leyendo ambos sensores se obtienen las posiciones de los cuatro servos.
 
 Se calcula el desfase entre la posición leída y la posición actual según el programa de Zowi (inicialmente 90º), y se calcula la nueva posición necesaria a establecer en el servo para obtener los 90º deseados.
 
-El proceso de lectura-corrección se lleva a cabo de forma iterativa hasta obtener una lectura con error inferior a 1º respecto a 90º.
+El proceso de lectura-corrección se lleva a cabo de forma iterativa hasta obtener una lectura con error inferior a 1º.
 
 \paragraph{Calibración de los sensores}
 
 Esta calibración se ha de realizar cada vez que el sistema es iniciado o reiniciado.
 
-Mediante las funciones de la librería de MinIMU, se establecen los ángulos cero para cada eje, para ello el operario es guiado a insertar los zapatos (que contienen los sensores) en los cajetines del banco de calibración, en éste paso se toman medidas hasta valorar que la calibración ha sido correcta. En esta etapa se corrigen pequeñas inclinaciones que pueda haber en el espacio de trabajo. Es la parte más crítica del proceso, porque la calibración se ve muy afectada por el movimiento, vibraciones o incluso campos magnéticos.
+Mediante las funciones de la librería de MinIMU, se establecen los ángulos cero para cada eje, para ello el operario es guiado a insertar los zapatos (que contienen los sensores) en los cajetines del banco de calibración, en este paso se toman medidas hasta valorar que la calibración ha sido correcta. En esta etapa se corrigen pequeñas inclinaciones que pueda haber en el espacio de trabajo. Es la parte más crítica del proceso, porque la calibración se ve muy afectada por el movimiento, vibraciones o incluso campos magnéticos.
 
-Durante el algoritmo de calibración se ha hablado del ángulo de 90º como ángulo deseado. Realmente, el valor éste ángulo para las caderas se corresponde con el 0º, mientras que para los piés se corresponde con el 90º, por lo que tambien es ajustado en esta etapa. Tras valorar que los ángulos 0º han sido bien definidos y su lectura es estable, se ha de girar cada zapato 90º utilizando los cajetines verticales. En esta fase se corregirá el pequeño error que pueda tener el sensor en esos 90º (no suele ser mayor de 1º).
+Durante el algoritmo de calibración se ha hablado del ángulo de 90º como ángulo deseado. Realmente, el valor este ángulo para las caderas se corresponde con el 0º, mientras que para los piés se corresponde con el 90º, por lo que también es ajustado en esta etapa. Tras valorar que los ángulos 0º han sido bien definidos y su lectura es estable, se ha de girar cada zapato 90º utilizando los cajetines verticales. En esta fase se corregirá el pequeño error que pueda tener el sensor en esos 90º, que no suele ser mayor de 1º.
 
 \paragraph{Calibración del acelerómetro}
 
 Configuración necesaria cada vez que se reemplace el sensor. Ésta es la única configuración necesaria para replicar el sistema.
 
-Esta calibración no forma parte del programa del sistema, sino de su configuración e instalación. En los 2 armarios que se han creado, se utilizan en total 4 sensores IMUs, los circuitos integrados que contiene no son exactamente iguales y, por recomendación del fabricante y creador de la librería de MinIMU, se han de ajustar los valores máximos y minímos crudos del magnetómetro (mismo encapsulado que el acelerómetro). Para ello se utiliza un programa del fabricante que muestra, por el puerto serie, el valor máximo y mínimo crudos registrados mientras el sensor es movido en todos los ángulos. Estas constantes son introducidas en el programa de cada armario para ser utilizadas por la librería del acelerómetro, LSM303.
+Esta calibración no forma parte del programa del sistema, sino de su configuración e instalación. En los 2 armarios que se han creado, se utilizan en total 4 sensores IMUs, los circuitos integrados que contiene no son exactamente iguales y, por recomendación del fabricante y creador de la librería de MinIMU, se han de ajustar los valores máximos y minímos crudos del magnetómetro (mismo encapsulado que el acelerómetro). Para ello se utiliza un programa del fabricante que muestra, por el puerto serie, el valor máximo y mínimo crudos registrados mientras el sensor es movido en todos los ángulos. Estos valores son introducidos como constantes en el programa de cada armario para ser utilizadas por la librería del acelerómetro, LSM303.
 
 \subsubsection{Zowi}
 
-El programa definido para la controladora de Zowi es un intérprete de los comandos definidos. La Raspberry descargará dicho intérprete en el microcontrolador de Zowi para poder comunicarle las posiciones a las que ha de mover los servos, y los valores de calibración que tendrá que guardar en su memoria EEPROM, memoria que no es sobrescrita en el proceso de programación habitual de la placa controladora.
+El programa creado para la controladora de Zowi es un intérprete de los comandos definidos. La Raspberry descargará dicho intérprete en el microcontrolador de Zowi para poder comunicarle las posiciones a las que ha de mover los servos, y los valores de calibración que tendrá que guardar en su memoria EEPROM, memoria que no es sobrescrita en el proceso de programación habitual de la placa controladora.
 
-Adicionalmente, la controladora de Zowi cuenta con un módulo de EEPROM por  I\textsuperscript{2}C, donde se recogen datos de fabricación de la placa. De esta forma se tienen 2 módulos de EEPROM, dejando el módulo del microcontrolador disponible para ser modificado por los usuarios de la placa.
+Adicionalmente, la controladora de Zowi cuenta con un módulo de EEPROM por I\textsuperscript{2}C, donde se recogen datos de fabricación de la placa. De esta forma se tienen 2 módulos de EEPROM, dejando el módulo del microcontrolador disponible para ser modificado por los usuarios de la placa.
 
-Es en el módulo habitual donde se registran los valores de calibración del servo, pudiendo ser configurados por los usuarios en caso de que desmonten el juguete o reemplacen algún componente. Por otro lado, desde el módulo EEPROM por  I\textsuperscript{2}C, se obtendrá el número de serie, que almacenará la Raspberry en la base de datos con fines de trazabilidad.
+Es en el módulo habitual donde se registran los valores de calibración del servo, pudiendo ser configurados por los usuarios en caso de que desmonten el juguete o reemplacen algún componente. Por otro lado, desde el módulo EEPROM por I\textsuperscript{2}C, se obtendrá el número de serie, que almacenará la Raspberry en la base de datos con fines de trazabilidad.
 
 Las librerías que se utilizan serán I2C\_eeprom.h y las estándar Servo.h para el movimiento de los servos y EEPROM.h para guardar los valores de calibración.
 
@@ -640,7 +640,7 @@ La Raspberry resulta ser un componente tan importante como la Mega dentro del si
 
 Este ordenador tiene instalado un sistema operativo Raspbian, versión adaptada de Debian a Raspberry, concretamente se usa la última versión estable en el momento de desarrollo, Wheezie.
 
-El lenguaje elegido para hacer el software es python, por lo rápido que resulta desarrollar con éste lenguaje y por ser el más familiar para el autor. Se instalan por tanto los paquetes necesarios (el entorno python-dev, el gestor de paquetes PIP y el gestor de entornos virtuales, virtualenv). Las librerías empleadas son serial para las comunicaciones serie, os para poder ejecutar comandos del sistema operativo y pymysql para poder escribir en bases de datos MySQL.
+El lenguaje elegido para hacer el software es python, por lo rápido que resulta desarrollar con este lenguaje y por familiaridad. Se instalan por tanto los paquetes necesarios (el entorno python-dev, el gestor de paquetes PIP y el gestor de entornos virtuales, virtualenv). Las librerías empleadas son serial para las comunicaciones serie, os para poder ejecutar comandos del sistema operativo y pymysql para poder escribir en bases de datos MySQL.
 
 Para que el controlador de Zowi interprete las instrucciones que recibirá, se ha de descargar el intérprete creado. Esto requiere que Raspberry programe el micro ATMega328p de Zowi, para ello se utiliza la herramienta AVRdude como instrucción del sistema operativo, directamente desde el programa corriendo en python.
 El programa en Arduino del intérprete está convertido en un fichero hexadecimal ya compilado con el entorno de Arduino, AVRdude escribirá este programa en el microcontrolador de Zowi.
@@ -660,7 +660,7 @@ Cuando se recibe este código, Raspberry programará la ZUM de Zowi con el softw
 El programa es subido usando la instrucción de AVRdude:
 \begin{center} avrdude -patmega328p -carduino -P/dev/ttyUSB1 -b 115200 -D -Uflash:w:/home/pi/zowi/python/zowi\_offset\_i2c.cpp.hex:i \end{center}
 
-Como se ha dicho anteriormente, éste programa es necesario para interpretar los códigos e instrucciones enviados desde Mega. Se envía un código de confirmación con el texto “M” o “B” indicando a Mega indicando el resultado del proceso.
+Como se ha dicho anteriormente, este programa es necesario para interpretar los códigos e instrucciones enviados desde Mega. Se envía un código de confirmación con el texto “M” o “B” indicando a Mega indicando el resultado del proceso.
 
 \textbf{FZUM:}
 Cuando se recibe este código, se programa ZUM de Zowi con el programa final del juguete. El fichero está está en el siguiente directorio:
@@ -689,11 +689,11 @@ Se instala en el sistema una base de datos MySQL local, contra la que se registr
 Se escribe en la base de datos tras cada calibración, sea buena o mala. Para lo que se utiliza un campo de ``Estado'' que valdrá 1 o 0, respectivamente.
 Se registran los errores de calibración leídos en Arduino Mega para cada uno de los 4 servos.
 Se registran además las 4 posiciones ``trim'' de los servos, las mismas que se hacen llegar a la placa de Zowi para que guarde en su EEPROM para salir a venta.
-Se registra la hora, con fines estadísticos de tiempos y tambien el número de serie del Zowi conectado con fin de trazabilidad en caso de errores/reclamaciones.
+Se registra la hora, con fines estadísticos de tiempos y también el número de serie del Zowi conectado con fin de trazabilidad en caso de errores/reclamaciones.
 
 Cuando se inicia o apaga el sistema, se escriben todos los campos a 1 salvo la hora para el caso de inicio. Y todos los valores a 0 salvo la hora para el fin.
 
-Durante el uso de los primeros días en producción surgieron algunos problemas, para los que se definieron unos códigos de error y se implementaron ciertas correcciones de forma remota, de la misma forma que para inicio y final se usan valores a 1 y a 0, para estos errores utilizamos:
+Durante el uso de los primeros días en producción surgen algunos problemas, para los que se definieron unos códigos de error y se implementan ciertas correcciones de forma remota. De la misma forma que para registrar inicio y final se usan valores a 1 y a 0, para estos errores se utilizan:
 
 \begin{itemize}
   \item \textbf{Valores a 2:} Excepción del cable, producido por pérdida de comunicación con Mega.
@@ -717,6 +717,6 @@ Se crea una una script, \textbf{running.sh} que funciona como monitor, hará que
 
 Se configura el arranque automático de la script anterior al encender el sistema, dicha script levantará el programa principal nada más ser iniciado el sistema. El arranque automático se logra mediante el fichero \textbf{ZowiInit}, que se puede consultar en el Anexo \ref{app:zowiinit}.
 
-Durante el desarrollo se creó un documento de notas para facilitar la reproducción de la instalación desde cero, además de la creación de unas imágenes completas de la tarjeta SD de la Raspberry, utilizando Win32DiskImager. Se anexan las mencionadas notas por si pudiesen resultar de interés para el lector, Anexo \ref{app:raspi-tips}.
+Durante el desarrollo se creó un documento de notas para facilitar la reproducción de la instalación desde cero, además de la creación de unas imágenes completas de las tarjetas SD de las Raspberry a modo de backups, utilizando Win32DiskImager. Se anexan las mencionadas notas por si pudiesen resultar de interés. Anexo \ref{app:raspi-tips}.
 
-Tras observar el funcionamiento del sistema en producción durante algunos días, se detectan algunos errores al conectar y desconectar repetidas veces los robots. El sistema podría no funcionar si se asigna un puerto diferente a Mega, o si se inicia el sistema con un Zowi ya conectado. Para mejorar ésto, se crean unas reglas (fichero \textbf{50-usbportsbq.rules}) para definir el puerto según el ID del fabricante de la placa, asignando a cualquier puerto USB conectado a Raspberry el alias de “mega” o “zowi” en lugar de ttyUSBX, nombre por defecto) . Dichas reglas son instaladas dentro de \textbf{/etc/udev/rules.d/}. El programa de python es modificado para asumir estos cambios. Las notas sobre el fichero de las reglas se puede ver en el Anexo \ref{app:rules}. Además, se implementa una nueva función en el código que desconecta y conecta eléctricamente la bahía del puerto USB de Zowi por software (utilizando \textbf{bind} y \textbf{unbind}) antes de cada programación. Los errores y reinicios se reducen inmediatamente.
+Tras observar el funcionamiento del sistema en producción durante algunos días, se detectan algunos errores al conectar y desconectar repetidas veces los robots. El sistema podría no funcionar si se asigna un puerto diferente a Mega, o si se inicia el sistema con un Zowi ya conectado, entre otras cosas. Para mejorar esto, se crean unas reglas (fichero \textbf{50-usbportsbq.rules}) para definir el puerto según el ID del fabricante de la placa, asignando a cualquier puerto USB conectado a Raspberry el alias de “mega” o “zowi” en lugar de ttyUSBX, nombre por defecto) . Dichas reglas son instaladas dentro de \textbf{/etc/udev/rules.d/}. El programa de python es modificado para asumir estos cambios. Las notas sobre el fichero de las reglas se puede ver en el Anexo \ref{app:rules}. Además, se implementa una nueva función en el código que desconecta y conecta eléctricamente la bahía del puerto USB de Zowi por software (utilizando \textbf{bind} y \textbf{unbind}) antes de cada programación. Los errores y reinicios se reducen inmediatamente.
